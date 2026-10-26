@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rhodes Terminal · Explorador de operadores de Arknights</title>
+  <meta name="description" content="Busca, filtra y compara más de 330 operadores de Arknights con datos en vivo de RhodesAPI. Guarda favoritos con notas tácticas en tu navegador.">
+  <meta name="theme-color" content="#181818">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rhodes Terminal · Explorador de operadores de Arknights">
+  <meta property="og:description" content="Busca, filtra y compara operadores de Arknights por clase, rareza y facción. Gratis y sin cuenta.">
+  <meta property="og:url" content="https://juulren.github.io/Web-Project-Rhodes-AI/">
+  <meta property="og:image" content="https://juulren.github.io/Web-Project-Rhodes-AI/assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <!-- ============ Navegación flotante ============ -->
+  <header class="site-header">
+    <nav class="nav-bar" aria-label="Principal">
+      <a class="brand" href="#hero" aria-label="Rhodes Terminal, ir al inicio">
+        <img src="assets/favicon.svg" alt="" width="24" height="24">
+        <span>Rhodes Terminal</span>
+      </a>
+
+      <div id="site-menu" class="site-menu">
+        <ul class="menu-list">
+          <li><a class="menu-link" href="#hero" aria-current="page">Inicio</a></li>
+          <li><a class="menu-link" href="#catalogo">Catálogo</a></li>
+          <li><a class="menu-link" href="#stats-panel">Inteligencia</a></li>
+          <li><a class="menu-link" href="#favorites">Favoritos</a></li>
+          <li><a class="menu-link" href="#faq">Preguntas</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-open-compare aria-label="Comparar operadores">
+          <i class="ph ph-arrows-left-right" aria-hidden="true"></i>
+          <span>Comparar</span>
+        </button>
+        <button type="button" id="theme-toggle" class="icon-btn" aria-pressed="false" aria-label="Cambiar a tema claro">
+          <i class="ph ph-sun theme-icon-light" aria-hidden="true"></i>
+          <i class="ph ph-moon theme-icon-dark" aria-hidden="true"></i>
+        </button>
+        <button type="button" id="menu-toggle" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Abrir menú">
+          <span class="menu-bar" aria-hidden="true"></span>
+          <span class="menu-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ============ Hero ============ -->
+    <section id="hero" class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><i class="ph ph-broadcast" aria-hidden="true"></i> Terminal táctica de Rhodes Island</p>
+          <h1 class="hero-title">Arma tu escuadrón ideal<br>con datos reales<br>de cada operador</h1>
+          <p class="hero-subtitle">Busca, filtra y compara operadores de Arknights por clase, rareza y facción. Guarda tus favoritos con notas tácticas que siguen ahí cuando vuelves.</p>
+          <a class="btn btn-primary" href="#catalogo">
+            <span>Explorar operadores</span>
+            <i class="ph ph-arrow-down" aria-hidden="true"></i>
+          </a>
+          <p class="hero-proof">
+            <i class="ph ph-database" aria-hidden="true"></i>
+            <span><strong id="hero-total" class="mono">335</strong> operadores en vivo desde RhodesAPI · gratis y sin cuenta</span>
+          </p>
+        </div>
+
+        <aside class="hero-visual" aria-label="Vista previa del escuadrón">
+          <div class="terminal-card">
+            <div class="terminal-head">
+              <span class="terminal-dot" aria-hidden="true"></span>
+              <span class="mono">escuadrón · vista previa</span>
+            </div>
+            <ul id="hero-showcase" class="showcase-list">
+              <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
+              <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
+              <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ Panel de inteligencia (estadísticas dinámicas) ============ -->
+    <section id="stats-panel" class="section reveal" aria-labelledby="stats-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="stats-title">Inteligencia del grupo visible</h2>
+          <p>Se recalcula con cada búsqueda y cada filtro, usando la promoción más alta disponible.</p>
+        </header>
+
+        <dl class="metrics-grid">
+          <div class="metric-card">
+            <dt>Operadores listados</dt>
+            <dd class="mono" data-stat="total">0</dd>
+          </div>
+          <div class="metric-card">
+            <dt>HP promedio</dt>
+            <dd class="mono" data-stat="hp">0</dd>
+          </div>
+          <div class="metric-card">
+            <dt>ATK promedio</dt>
+            <dd class="mono" data-stat="atk">0</dd>
+          </div>
+          <div class="metric-card">
+            <dt>DEF promedio</dt>
+            <dd class="mono" data-stat="def">0</dd>
+          </div>
+          <div class="metric-card">
+            <dt>Coste DP promedio</dt>
+            <dd class="mono" data-stat="cost">0</dd>
+          </div>
+        </dl>
+
+        <div class="distribution-grid">
+          <article class="panel">
+            <h3>Distribución por clase</h3>
+            <div id="class-distribution" class="distribution" aria-live="polite"></div>
+          </article>
+          <article class="panel">
+            <h3>Distribución por rareza</h3>
+            <div id="rarity-distribution" class="distribution" aria-live="polite"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Catálogo ============ -->
+    <section id="catalogo" class="section" aria-labelledby="catalog-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="catalog-title">Catálogo de operadores</h2>
+          <p>Escribe un nombre, una facción o una palabra de su biografía. Los resultados cambian mientras escribes.</p>
+        </header>
+
+        <div class="toolbar panel">
+          <div class="search-field">
+            <label for="search-input" class="field-label">Buscar operador</label>
+            <div class="input-icon">
+              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <input id="search-input" class="input" type="search" placeholder="Nombre, facción o palabra clave" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="history-row">
+              <span class="field-hint">Búsquedas recientes</span>
+              <ul id="search-history" class="chip-list" aria-label="Búsquedas recientes"></ul>
+              <button type="button" id="clear-history" class="btn btn-ghost btn-sm" hidden>Limpiar historial</button>
+            </div>
+          </div>
+
+          <div class="filter-grid">
+            <div class="field">
+              <label for="filter-class" class="field-label">Clase</label>
+              <select id="filter-class" class="input">
+                <option value="">Todas las clases</option>
+                <option value="Vanguard">Vanguard</option>
+                <option value="Guard">Guard</option>
+                <option value="Defender">Defender</option>
+                <option value="Sniper">Sniper</option>
+                <option value="Caster">Caster</option>
+                <option value="Medic">Medic</option>
+                <option value="Supporter">Supporter</option>
+                <option value="Specialist">Specialist</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-rarity" class="field-label">Rareza</label>
+              <select id="filter-rarity" class="input">
+                <option value="">Todas las rarezas</option>
+                <option value="6">6 estrellas</option>
+                <option value="5">5 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="2">2 estrellas</option>
+                <option value="1">1 estrella</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-affiliation" class="field-label">Afiliación</label>
+              <select id="filter-affiliation" class="input">
+                <option value="">Todas las afiliaciones</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sort-select" class="field-label">Ordenar por</label>
+              <select id="sort-select" class="input">
+                <option value="name-asc">Nombre de la A a la Z</option>
+                <option value="name-desc">Nombre de la Z a la A</option>
+                <option value="rarity-desc">Rareza: mayor a menor</option>
+                <option value="rarity-asc">Rareza: menor a mayor</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toolbar-foot">
+            <p id="results-count" class="field-hint" aria-live="polite">Cargando operadores</p>
+            <button type="button" id="reset-filters" class="btn btn-ghost btn-sm">
+              <i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i>
+              <span>Quitar filtros</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="operator-grid" class="operator-grid" aria-live="polite" aria-busy="true">
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+          <div class="card-skeleton" aria-hidden="true"><span class="sk sk-media"></span><span class="sk sk-line"></span><span class="sk sk-line short"></span><span class="sk sk-block"></span></div>
+        </div>
+
+        <div id="empty-state" class="state-view panel" hidden>
+          <i class="ph ph-binoculars state-icon" aria-hidden="true"></i>
+          <h3>Ningún operador coincide con tu búsqueda</h3>
+          <p>Prueba con otro nombre o quita algún filtro. También puedes buscar por facción, como Rhodes Island o Lungmen.</p>
+          <button type="button" id="empty-reset" class="btn btn-secondary">Quitar filtros</button>
+        </div>
+
+        <div id="error-state" class="state-view state-error panel" role="alert" hidden>
+          <i class="ph ph-wifi-slash state-icon" aria-hidden="true"></i>
+          <h3>No pudimos cargar los operadores</h3>
+          <p id="error-message">RhodesAPI no respondió. Revisa tu conexión e intenta otra vez.</p>
+          <button type="button" id="retry-button" class="btn btn-primary">
+            <i class="ph ph-arrow-clockwise" aria-hidden="true"></i>
+            <span>Reintentar conexión</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Tagline con revelado palabra por palabra ============ -->
+    <section id="tagline" class="section tagline-section" aria-label="Lema">
+      <div class="container">
+        <p class="tagline" data-tagline>
+          Cada operador<br>
+          tiene un papel.<br>
+          Encuentra el tuyo<br>
+          y despliégalo<br>
+          cuando importe.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ Favoritos (CRUD) ============ -->
+    <section id="favorites" class="section reveal" aria-labelledby="favorites-title">
+      <div class="container">
+        <header class="section-head section-head-row">
+          <div>
+            <h2 id="favorites-title">Tu escuadrón de favoritos</h2>
+            <p>Asigna rol, prioridad y una nota táctica a cada operador. Todo se guarda en este navegador.</p>
+          </div>
+          <p class="count-pill mono"><span id="favorites-count">0</span> guardados</p>
+        </header>
+
+        <ul id="favorites-list" class="favorites-list"></ul>
+
+        <div id="favorites-empty" class="state-view panel">
+          <i class="ph ph-star state-icon" aria-hidden="true"></i>
+          <h3>Tu escuadrón está vacío</h3>
+          <p>Pulsa Guardar en cualquier tarjeta del catálogo para sumar un operador. Después podrás asignarle un rol, una prioridad y una nota táctica.</p>
+          <a class="btn btn-secondary" href="#catalogo">Ir al catálogo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Cómo funciona ============ -->
+    <section id="how" class="section reveal" aria-labelledby="how-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="how-title">Cómo funciona</h2>
+          <p>Tres pasos para pasar de 335 nombres a un escuadrón con plan.</p>
+        </header>
+        <ol class="steps">
+          <li class="step panel">
+            <span class="step-number mono">01</span>
+            <i class="ph ph-magnifying-glass step-icon" aria-hidden="true"></i>
+            <h3>Busca</h3>
+            <p>Escribe un nombre, una facción o una palabra de su biografía. Las coincidencias aparecen mientras escribes y tus búsquedas quedan a un clic.</p>
+          </li>
+          <li class="step panel">
+            <span class="step-number mono">02</span>
+            <i class="ph ph-funnel step-icon" aria-hidden="true"></i>
+            <h3>Filtra y ordena</h3>
+            <p>Combina clase, rareza y afiliación. Ordena de la A a la Z o por estrellas y mira cómo cambian los promedios del grupo.</p>
+          </li>
+          <li class="step panel">
+            <span class="step-number mono">03</span>
+            <i class="ph ph-sword step-icon" aria-hidden="true"></i>
+            <h3>Guarda y compara</h3>
+            <p>Marca favoritos con una nota táctica y enfrenta a dos operadores atributo por atributo antes de desplegarlos.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ Preguntas frecuentes ============ -->
+    <section id="faq" class="section reveal" aria-labelledby="faq-title">
+      <div class="container container-narrow">
+        <header class="section-head">
+          <h2 id="faq-title">Preguntas frecuentes</h2>
+        </header>
+        <div class="faq-list">
+          <details class="faq-item panel">
+            <summary>¿De dónde salen los datos de los operadores?</summary>
+            <p>De RhodesAPI, una API pública mantenida por la comunidad de Arknights. Si el backend en C# del proyecto está corriendo en tu equipo, la página lo consulta primero y usa RhodesAPI como respaldo.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Necesito crear una cuenta?</summary>
+            <p>No. Tus favoritos, notas tácticas, historial de búsquedas y tema preferido se guardan en el almacenamiento local de tu navegador.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Qué pasa si la API no responde?</summary>
+            <p>Verás un aviso con el motivo del fallo y un botón para reintentar. Tus favoritos guardados siguen disponibles mientras tanto.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Cómo se calculan las estadísticas del panel?</summary>
+            <p>Promediamos HP, ATK, DEF y coste de DP de los operadores visibles en su promoción más alta disponible. Cada búsqueda o filtro recalcula los valores y la distribución por clase y rareza.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Qué mide el comparador cara a cara?</summary>
+            <p>HP, ATK, DEF, RES, coste, bloqueo e intervalo de ataque. Resalta al ganador de cada atributo; en coste e intervalo gana el valor más bajo.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Puedo borrar mis datos?</summary>
+            <p>Sí. Elimina un favorito desde su tarjeta, limpia el historial con un botón o borra los datos del sitio desde la configuración de tu navegador.</p>
+          </details>
+          <details class="faq-item panel">
+            <summary>¿Funciona en el celular?</summary>
+            <p>Sí. La interfaz se adapta desde pantallas de 320 píxeles hasta monitores de escritorio, y el menú se abre como panel completo en móviles.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Llamado final ============ -->
+    <section id="final-cta" class="section reveal" aria-labelledby="final-title">
+      <div class="container">
+        <div class="final-card panel">
+          <h2 id="final-title">Tu próximo escuadrón empieza con una búsqueda</h2>
+          <p>Sin registro y sin descargas. Tus favoritos te esperan en este navegador.</p>
+          <a class="btn btn-primary" href="#catalogo">
+            <span>Explorar operadores</span>
+            <i class="ph ph-arrow-up" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Pie de página ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <p class="brand"><img src="assets/favicon.svg" alt="" width="24" height="24"><span>Rhodes Terminal</span></p>
+        <p class="field-hint">Proyecto académico. Datos de RhodesAPI. Arknights pertenece a Hypergryph y Yostar.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="privacidad.html">Privacidad</a></li>
+        <li><a href="terminos.html">Términos de uso</a></li>
+        <li><a href="https://github.com/Juulren/Web-Project-Rhodes-AI" rel="noopener">Repositorio en GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ============ Modal comparador ============ -->
+  <dialog id="compare-modal" class="modal modal-wide" aria-labelledby="compare-title">
+    <div class="modal-head">
+      <h2 id="compare-title">Comparador cara a cara</h2>
+      <button type="button" class="icon-btn" data-close-modal aria-label="Cerrar comparador">
+        <i class="ph ph-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="compare-pickers">
+      <div class="field">
+        <label for="compare-a" class="field-label">Operador A</label>
+        <select id="compare-a" class="input">
+          <option value="">Elige un operador</option>
+        </select>
+      </div>
+      <button type="button" id="compare-swap" class="icon-btn" aria-label="Intercambiar operadores">
+        <i class="ph ph-arrows-left-right" aria-hidden="true"></i>
+      </button>
+      <div class="field">
+        <label for="compare-b" class="field-label">Operador B</label>
+        <select id="compare-b" class="input">
+          <option value="">Elige un operador</option>
+        </select>
+      </div>
+    </div>
+    <div id="compare-results" class="compare-results" aria-live="polite">
+      <p class="field-hint">Elige dos operadores para ver quién gana en cada atributo.</p>
+    </div>
+  </dialog>
+
+  <!-- ============ Modal de nota táctica (Update del CRUD) ============ -->
+  <dialog id="note-modal" class="modal" aria-labelledby="note-title">
+    <form id="note-form" method="dialog" novalidate>
+      <div class="modal-head">
+        <h2 id="note-title">Editar ficha táctica</h2>
+        <button type="button" class="icon-btn" data-close-modal aria-label="Cerrar editor">
+          <i class="ph ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p id="note-operator" class="field-hint"></p>
+
+      <div class="form-grid">
+        <div class="field field-full">
+          <label for="note-role" class="field-label">Rol en el escuadrón</label>
+          <input id="note-role" class="input" type="text" maxlength="60" placeholder="Ejemplo: DPS antiaéreo">
+        </div>
+        <div class="field">
+          <label for="note-priority" class="field-label">Prioridad</label>
+          <select id="note-priority" class="input">
+            <option value="1">1 · Máxima</option>
+            <option value="2">2 · Alta</option>
+            <option value="3" selected>3 · Media</option>
+            <option value="4">4 · Baja</option>
+            <option value="5">5 · Reserva</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="note-rating" class="field-label">Calificación</label>
+          <select id="note-rating" class="input">
+            <option value="5">5 estrellas</option>
+            <option value="4">4 estrellas</option>
+            <option value="3" selected>3 estrellas</option>
+            <option value="2">2 estrellas</option>
+            <option value="1">1 estrella</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="note-promotion" class="field-label">Promoción preferida</label>
+          <select id="note-promotion" class="input">
+            <option value="Base">Base</option>
+            <option value="Elite1">Élite 1</option>
+            <option value="Elite2" selected>Élite 2</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="note-text" class="field-label">Nota táctica</label>
+          <textarea id="note-text" class="input textarea" rows="4" maxlength="500" placeholder="Ejemplo: activar la S3 cuando entren los drones"></textarea>
+          <p class="field-hint"><span id="note-counter" class="mono">0</span> de 500 caracteres</p>
+        </div>
+      </div>
+      <p id="note-error" class="field-error" role="alert" hidden></p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar nota</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ Plantilla de tarjeta (la clona script.js) ============ -->
+  <template id="operator-card-template">
+    <article class="operator-card">
+      <div class="card-media">
+        <img class="card-art" src="assets/operator-placeholder.svg" alt="" loading="lazy" decoding="async" width="320" height="320">
+        <span class="card-rarity mono"></span>
+      </div>
+      <div class="card-body">
+        <p class="card-class"><i class="ph ph-shield" aria-hidden="true"></i><span></span></p>
+        <h3 class="card-name"></h3>
+        <p class="card-affiliation"></p>
+        <p class="card-description"></p>
+        <dl class="card-stats mono">
+          <div><dt>HP</dt><dd data-field="hp"></dd></div>
+          <div><dt>ATK</dt><dd data-field="atk"></dd></div>
+          <div><dt>DEF</dt><dd data-field="def"></dd></div>
+          <div><dt>DP</dt><dd data-field="cost"></dd></div>
+        </dl>
+        <div class="card-actions">
+          <button type="button" class="btn btn-secondary btn-sm" data-action="favorite" aria-pressed="false">
+            <i class="ph ph-star" aria-hidden="true"></i>
+            <span>Guardar</span>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" data-action="compare">
+            <i class="ph ph-arrows-left-right" aria-hidden="true"></i>
+            <span>Comparar</span>
+          </button>
+        </div>
+      </div>
+    </article>
+  </template>
+</body>
+</html>

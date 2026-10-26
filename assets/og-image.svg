@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Rhodes Terminal, explorador de operadores de Arknights">
+  <rect width="1200" height="630" fill="#181818"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#1F1F1F" stroke="#313131" stroke-width="2"/>
+  <path d="M168 150 232 187v74l-64 37-64-37v-74Z" fill="none" stroke="#F2C94C" stroke-width="8" stroke-linejoin="round"/>
+  <text x="104" y="390" fill="#F5F5F4" font-family="Geist, sans-serif" font-size="72" font-weight="700">Rhodes Terminal</text>
+  <text x="104" y="460" fill="#A8A29E" font-family="Geist, sans-serif" font-size="36">Busca, filtra y compara operadores de Arknights</text>
+</svg>

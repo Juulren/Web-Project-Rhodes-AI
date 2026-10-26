@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Página no encontrada · Rhodes Terminal</title>
+  <meta name="description" content="La página que buscas no existe en Rhodes Terminal.">
+  <!-- GitHub Pages sirve este archivo en cualquier ruta, por eso los recursos usan la ruta absoluta del proyecto -->
+  <link rel="icon" type="image/svg+xml" href="/Web-Project-Rhodes-AI/assets/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/Web-Project-Rhodes-AI/style.css">
+  <script>
+    try {
+      const theme = localStorage.getItem("rhodes.theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch { /* almacenamiento bloqueado: se queda el tema oscuro */ }
+  </script>
+</head>
+<body>
+  <main class="simple-page">
+    <p class="error-code mono">404</p>
+    <h1>Esta ruta no aparece en los registros de Rhodes Island</h1>
+    <p>Puede que el enlace esté incompleto o que la página se haya movido. El catálogo de operadores sigue en el mismo lugar.</p>
+    <a class="btn btn-primary" href="/Web-Project-Rhodes-AI/">Volver al catálogo</a>
+  </main>
+</body>
+</html>

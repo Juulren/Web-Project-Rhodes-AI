@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidad · Rhodes Terminal</title>
+  <meta name="description" content="Qué datos guarda Rhodes Terminal y dónde se almacenan.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      const theme = localStorage.getItem("rhodes.theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch { /* almacenamiento bloqueado: se queda el tema oscuro */ }
+  </script>
+</head>
+<body>
+  <main class="simple-page">
+    <h1>Política de privacidad</h1>
+    <p>Actualizada el 25 de octubre de 2026.</p>
+
+    <h2>Qué guardamos</h2>
+    <p>Rhodes Terminal no tiene cuentas ni servidores propios en producción. Lo que guardas queda en el almacenamiento local de tu navegador:</p>
+    <ul>
+      <li>Tus operadores favoritos, con su rol, prioridad, calificación y nota táctica.</li>
+      <li>Tus últimas búsquedas, para mostrarlas como accesos rápidos.</li>
+      <li>Tu tema preferido, claro u oscuro.</li>
+    </ul>
+
+    <h2>Qué compartimos</h2>
+    <p>Nada de lo anterior sale de tu equipo. Para mostrar el catálogo, tu navegador consulta RhodesAPI y descarga los retratos desde los servidores de imágenes de la comunidad. Esas solicitudes siguen las políticas de cada servicio.</p>
+
+    <h2>Cómo borrar tus datos</h2>
+    <p>Elimina favoritos desde su tarjeta, limpia el historial con el botón del buscador o borra los datos del sitio desde la configuración de tu navegador.</p>
+
+    <a class="btn btn-primary" href="index.html">Volver al catálogo</a>
+  </main>
+</body>
+</html>

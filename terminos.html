@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Términos de uso · Rhodes Terminal</title>
+  <meta name="description" content="Condiciones de uso del explorador académico Rhodes Terminal.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      const theme = localStorage.getItem("rhodes.theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch { /* almacenamiento bloqueado: se queda el tema oscuro */ }
+  </script>
+</head>
+<body>
+  <main class="simple-page">
+    <h1>Términos de uso</h1>
+    <p>Actualizados el 25 de octubre de 2026.</p>
+
+    <h2>Proyecto académico</h2>
+    <p>Rhodes Terminal es un trabajo universitario sin fines comerciales. Se ofrece tal cual, sin garantía de disponibilidad ni de exactitud de los datos.</p>
+
+    <h2>Datos y marcas</h2>
+    <p>La información de los operadores proviene de RhodesAPI, mantenida por la comunidad. Arknights, sus personajes e ilustraciones pertenecen a Hypergryph y Yostar. Este sitio no está afiliado a ninguna de las dos empresas.</p>
+
+    <h2>Uso permitido</h2>
+    <p>Puedes usar el explorador para consultar, comparar y planificar escuadrones. No lo uses para descargar masivamente el contenido de RhodesAPI.</p>
+
+    <a class="btn btn-primary" href="index.html">Volver al catálogo</a>
+  </main>
+</body>
+</html>
