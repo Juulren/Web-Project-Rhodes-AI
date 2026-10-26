@@ -64,7 +64,10 @@ test("el botón de tema alterna entre oscuro y claro y guarda la preferencia", a
   assert.equal(toggle.getAttribute("aria-pressed"), "true");
   assert.equal(toggle.getAttribute("aria-label"), "Cambiar a tema oscuro");
   assert.equal(storage.getItem(app.CONFIG.themeKey), "light");
-  assert.equal(doc.querySelector("meta[name='theme-color']").getAttribute("content"), "#FAFAF9");
+  assert.equal(doc.querySelector("meta[name='theme-color']").getAttribute("content"), "#ECEAE3");
+
+  toggle.click();
+  assert.equal(doc.querySelector("meta[name='theme-color']").getAttribute("content"), "#07090A");
 });
 
 test("el tema guardado se aplica al cargar", async () => {

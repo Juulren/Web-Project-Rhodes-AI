@@ -106,12 +106,23 @@ public partial class FrontendContractTests
         Assert.Contains("skip-link", firstLink!.ClassList);
     }
 
+    [Theory]
+    [MemberData(nameof(PagesData))]
+    public void Pages_LoadTheDistinctiveFontTrio(string page)
+    {
+        var html = ReadFile(page);
+
+        Assert.Contains("family=Big+Shoulders+Display", html);
+        Assert.Contains("family=Familjen+Grotesk", html);
+        Assert.Contains("family=Martian+Mono", html);
+        Assert.DoesNotMatch(new Regex(@"family=(Inter|Roboto|Geist|Space\+Grotesk|Open\+Sans)\b"), html);
+    }
+
     [Fact]
-    public void Index_LoadsApprovedFontsAndPhosphorIcons()
+    public void Index_UsesPhosphorIconsOnly()
     {
         var html = ReadFile("index.html");
 
-        Assert.Contains("family=Geist", html);
         Assert.Contains("@phosphor-icons/web", html);
         Assert.DoesNotMatch(new Regex("Material\\+Icons|Material\\+Symbols|material-icons", RegexOptions.IgnoreCase), html);
     }
@@ -417,8 +428,27 @@ public partial class FrontendContractTests
     }
 
     // =====================================================================
-    // Sistema visual (SKILLS.md parte B)
+    // Sistema visual: docs/design/frontend-aesthetics.md
+    // (reemplaza a SKILLS.md en tipografía, color, fondos, esquinas y movimiento)
     // =====================================================================
+
+    private static readonly Regex GenericFonts = new(
+        @"\b(Inter|Roboto|Arial|Helvetica|Open Sans|Space Grotesk|Segoe UI|system-ui|BlinkMacSystemFont|Geist)\b|-apple-system",
+        RegexOptions.IgnoreCase);
+
+    private static readonly string[] ThemeKeys = ["--ink-0", "--ink-1", "--ink-2", "--ink-3", "--line", "--fg", "--fg-muted", "--accent", "--hot"];
+
+    private static Dictionary<string, string> LightTokens()
+    {
+        var match = LightRule().Match(Css());
+        Assert.True(match.Success, "style.css debe redefinir los tokens en :root[data-theme=\"light\"].");
+        return CssDeclaration().Matches(match.Groups[1].Value)
+            .Where(m => m.Groups[1].Value.Trim().StartsWith("--"))
+            .ToDictionary(m => m.Groups[1].Value.Trim(), m => m.Groups[2].Value.Trim());
+    }
+
+    /// <summary>La hoja sin los bloques de tokens: aquí no debe quedar ningún color literal.</summary>
+    private static string CssWithoutTokenBlocks() => LightRule().Replace(RootRule().Replace(Css(), "", 1), "", 1);
 
     [Fact]
     public void Css_IsResponsiveAndRespectsReducedMotion()
@@ -431,132 +461,134 @@ public partial class FrontendContractTests
     }
 
     [Fact]
-    public void Css_UsesSingleApprovedTypefaceWithoutItalicsOrBlackWeights()
+    public void Css_UsesDistinctiveFontTrioAndNoGenericFamilies()
     {
-        var families = Declarations().Where(d => d.Property is "font-family" or "--font-sans" or "--font-mono").Select(d => d.Value).ToList();
-        Assert.NotEmpty(families);
-        Assert.All(families, f => Assert.DoesNotMatch(new Regex(@"\b(Inter|Roboto|Arial|Open Sans|Helvetica)\b", RegexOptions.IgnoreCase), f));
-        Assert.Contains(families, f => f.Contains("Geist"));
+        var tokens = RootTokens();
+        Assert.Contains("Big Shoulders Display", tokens["--font-display"]);
+        Assert.Contains("Familjen Grotesk", tokens["--font-body"]);
+        Assert.Contains("Martian Mono", tokens["--font-mono"]);
 
+        foreach (var (property, value) in Declarations())
+        {
+            if (property.StartsWith("--font-"))
+                Assert.DoesNotMatch(GenericFonts, value);
+            if (property == "font-family")
+                Assert.True(value.StartsWith("var(--font-") || value == "inherit", $"font-family debe usar un token: {value}");
+        }
         Assert.DoesNotContain(Declarations(), d => d.Property == "font-style" && d.Value.Contains("italic"));
-        Assert.DoesNotContain(Declarations(), d => d.Property == "font-weight" && d.Value is "800" or "900" or "bolder" or "black");
     }
 
-    private static readonly HashSet<string> AllowedFontSizes =
-        ["0.75rem", "0.875rem", "1rem", "1.125rem", "1.25rem", "1.5rem", "1.875rem", "2.25rem", "3rem", "3.75rem", "4.5rem", "6rem", "8rem"];
-
     [Fact]
-    public void Css_FontSizesSnapToTailwindScale()
+    public void Css_FontSizesUseTypeTokens()
     {
+        var tokens = RootTokens().Where(t => t.Key.StartsWith("--fs-")).ToList();
+        Assert.True(tokens.Count >= 7, "Se espera una escala tipográfica de al menos 7 tokens --fs-*.");
+        Assert.All(tokens, t => Assert.Matches(@"^(\d*\.?\d+rem|clamp\(.+\))$", t.Value));
+
         foreach (var (property, value) in Declarations())
         {
             if (property == "font-size")
-                Assert.True(value.StartsWith("var(--text-") || AllowedFontSizes.Contains(value), $"font-size fuera de escala: {value}");
-            if (property.StartsWith("--text-"))
-                Assert.True(AllowedFontSizes.Contains(value), $"Token {property} fuera de escala: {value}");
+                Assert.True(value.StartsWith("var(--fs-") || value == "inherit", $"font-size fuera de la escala: {value}");
         }
     }
 
-    private static readonly HashSet<int> AllowedSpacing = [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96];
-
     [Fact]
-    public void Css_SpacingUsesOnlyTokenValues()
+    public void Css_SpacingUsesSpaceTokens()
     {
+        Assert.True(RootTokens().Count(t => t.Key.StartsWith("--sp-")) >= 8, "Se esperan al menos 8 tokens de espaciado --sp-*.");
+
         foreach (var (property, value) in Declarations())
         {
-            bool isSpacing = SpacingProperty().IsMatch(property) || property.StartsWith("--space-");
-            if (!isSpacing) continue;
-
-            foreach (Match px in PixelValue().Matches(value))
-                Assert.True(AllowedSpacing.Contains(int.Parse(px.Groups[1].Value)), $"Espaciado no permitido en {property}: {value}");
-            Assert.DoesNotMatch(new Regex(@"\d(rem|em)\b"), value);
-        }
-    }
-
-    // "inherit" reutiliza el radio del contenedor (capas de fondo y rellenos de barras).
-    private static readonly HashSet<string> AllowedRadii = ["0", "2px", "4px", "6px", "8px", "12px", "16px", "24px", "9999px", "inherit"];
-
-    [Fact]
-    public void Css_RadiiUseTailwindValues()
-    {
-        foreach (var (property, value) in Declarations())
-        {
-            if (property.StartsWith("--radius-"))
-                Assert.True(AllowedRadii.Contains(value), $"Radio no permitido: {property}: {value}");
-            if (property.Contains("radius") && !property.StartsWith("--"))
-                Assert.True(value.StartsWith("var(--radius-") || AllowedRadii.Contains(value), $"Radio no permitido: {value}");
+            if (!SpacingProperty().IsMatch(property)) continue;
+            var rest = SpaceToken().Replace(value, " ");
+            rest = Regex.Replace(rest, @"\b(auto|0)\b", " ");
+            Assert.True(rest.Trim().Length == 0, $"Espaciado sin token en {property}: {value}");
         }
     }
 
     [Fact]
-    public void Css_HasNoBackgroundGradientsOrSingleSidedBorders()
+    public void Css_UsesChamferedCornersInsteadOfRoundedOnes()
     {
         var css = Css();
 
-        foreach (Match rule in CssRule().Matches(css))
-        {
-            var body = rule.Groups[2].Value;
-            if (body.Contains("gradient("))
-                Assert.True(body.Contains("background-clip: text"), $"Gradiente fuera de un texto en '{rule.Groups[1].Value.Trim()}'.");
-        }
-        Assert.DoesNotMatch(new Regex(@"border-(top|right|bottom|left)\s*:"), css);
-    }
-
-    [Fact]
-    public void Css_DarkThemeUsesApprovedBackgrounds()
-    {
-        string[] allowed = ["#000000", "#181818", "#1f1f1f", "#272727", "#313131", "#131209"];
-        var tokens = RootTokens();
-
-        foreach (var key in new[] { "--bg", "--surface", "--surface-raised", "--surface-strong" })
-        {
-            Assert.True(tokens.ContainsKey(key), $"Falta el token {key} en :root.");
-            Assert.Contains(tokens[key].ToLowerInvariant(), allowed);
-        }
-    }
-
-    [Fact]
-    public void Css_MotionUsesBaseCurveAndSafeProperties()
-    {
-        var tokens = RootTokens();
-        Assert.Equal("cubic-bezier(0.22, 1, 0.36, 1)", tokens["--ease"]);
-        foreach (var duration in tokens.Where(t => t.Key.StartsWith("--duration-")))
-            Assert.True(int.Parse(duration.Value.Replace("ms", "")) >= 200, $"{duration.Key} es menor a 200ms.");
-
-        string[] animatable = ["transform", "opacity", "color", "background-color", "border-color", "visibility"];
+        Assert.True(Regex.Matches(css, @"clip-path:\s*polygon\([^;]*var\(--cut").Count >= 4,
+            "Las piezas principales deben usar esquinas biseladas con clip-path y la variable --cut.");
         foreach (var (property, value) in Declarations())
         {
-            if (property is not ("transition" or "transition-property" or "transition-timing-function" or "animation" or "animation-timing-function"))
-                continue;
-
-            Assert.DoesNotMatch(new Regex(@"(?<![\w-])(ease|linear|ease-in|ease-out|ease-in-out)(?![\w-])"), value);
-            foreach (Match ms in Milliseconds().Matches(value))
-                Assert.True(int.Parse(ms.Groups[1].Value) >= 200 || ms.Groups[1].Value == "0", $"Duración menor a 200ms: {value}");
-
-            if (property == "transition")
-            {
-                foreach (var part in value.Split(','))
-                    Assert.Contains(part.Trim().Split(' ')[0], animatable);
-            }
-        }
-
-        foreach (Match keyframes in Keyframes().Matches(Css()))
-        {
-            foreach (Match decl in CssDeclaration().Matches(keyframes.Groups[1].Value))
-                Assert.Contains(decl.Groups[1].Value.Trim(), new[] { "transform", "opacity" });
+            if (property.Contains("radius") && !property.StartsWith("--"))
+                Assert.True(value is "0" or "50%", $"Solo se permiten esquinas rectas o círculos: {property}: {value}");
         }
     }
 
     [Fact]
-    public void Css_PreventsOrphansAndStylesHeroGradientText()
+    public void Css_BuildsAnAtmosphericLayeredBackground()
+    {
+        var body = CssRule().Matches(Css()).First(m => m.Groups[1].Value.Trim() == "body").Groups[2].Value;
+        var image = CssDeclaration().Matches(body).First(m => m.Groups[1].Value.Trim() == "background-image").Groups[2].Value;
+
+        Assert.True(Regex.Matches(image, "gradient\\(").Count >= 3, "El fondo debe combinar al menos tres capas de degradados.");
+        Assert.True(Regex.Matches(Css(), "repeating-linear-gradient\\(").Count >= 2, "Faltan las bandas de patrón geométrico.");
+    }
+
+    [Fact]
+    public void Css_ColorsLiveInThemeTokens()
+    {
+        var dark = RootTokens();
+        var light = LightTokens();
+        foreach (var key in ThemeKeys)
+        {
+            Assert.True(dark.ContainsKey(key), $"Falta {key} en el tema oscuro.");
+            Assert.True(light.ContainsKey(key), $"Falta {key} en el tema claro.");
+        }
+        Assert.NotEqual(dark["--ink-0"], light["--ink-0"]);
+
+        foreach (Match decl in CssDeclaration().Matches(CssWithoutTokenBlocks()))
+        {
+            var value = decl.Groups[2].Value;
+            Assert.DoesNotMatch(new Regex(@"#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\("), value);
+        }
+    }
+
+    [Fact]
+    public void Css_OrchestratesAStaggeredPageLoad()
+    {
+        var css = Css();
+        var tokens = RootTokens();
+
+        Assert.StartsWith("cubic-bezier(", tokens["--ease-out"]);
+        Assert.True(Keyframes().Matches(css).Count >= 3, "Se esperan al menos tres animaciones @keyframes.");
+        var delays = Declarations().Where(d => d.Property == "animation-delay").Select(d => d.Value).ToList();
+        Assert.Contains(delays, v => v.Contains("var(--d"));
+        Assert.Contains(delays, v => v.Contains("var(--i"));
+
+        foreach (var (property, value) in Declarations())
+        {
+            if (property is "transition" or "transition-property")
+                Assert.DoesNotMatch(new Regex(@"(?<![\w-])(width|height|top|left|all)(?![\w-])"), value);
+        }
+        foreach (Match keyframes in Keyframes().Matches(css))
+        {
+            foreach (Match decl in CssDeclaration().Matches(keyframes.Groups[1].Value))
+                Assert.Contains(decl.Groups[1].Value.Trim(), new[] { "transform", "opacity", "clip-path" });
+        }
+    }
+
+    [Fact]
+    public void Hero_StaggersItsEntrance()
+    {
+        var hero = Required(Page(), "section#hero");
+        Assert.True(hero.QuerySelectorAll("[style*='--d:']").Length >= 4, "El hero debe escalonar al menos cuatro elementos con --d.");
+        Assert.Equal(3, hero.QuerySelectorAll("h1 .hero-line").Length);
+    }
+
+    [Fact]
+    public void Css_PreventsOrphansAndOutlinesAHeroLine()
     {
         var css = Css();
 
         Assert.Contains("text-wrap: balance", css);
         Assert.Contains("text-wrap: pretty", css);
-        Assert.Contains("#ffffff, #9b9b9b", css.ToLowerInvariant());
-        Assert.Contains("#000000, #666666", css.ToLowerInvariant());
-        Assert.Contains("max-width: 680px", css);
+        Assert.Contains("-webkit-text-stroke", css);
     }
 
     [Fact]
@@ -566,7 +598,6 @@ public partial class FrontendContractTests
 
         Assert.Contains(":focus-visible", css);
         Assert.Contains(":active", css);
-        Assert.Contains("scale(0.98)", css);
         Assert.Contains(".card-skeleton", css);
         Assert.Contains("backdrop-filter", css);
     }
@@ -574,11 +605,18 @@ public partial class FrontendContractTests
     [GeneratedRegex(@"/\*.*?\*/", RegexOptions.Singleline)]
     private static partial Regex CssComments();
 
-    [GeneratedRegex(@"([-a-zA-Z]+)\s*:\s*([^;{}]+);")]
+    // Los nombres de propiedad admiten dígitos para leer tokens como --ink-0 o --sp-1.
+    [GeneratedRegex(@"([-a-zA-Z0-9]+)\s*:\s*([^;{}]+);")]
     private static partial Regex CssDeclaration();
 
     [GeneratedRegex(@":root\s*\{([^}]*)\}")]
     private static partial Regex RootRule();
+
+    [GeneratedRegex(@":root\[data-theme=""light""\]\s*\{([^}]*)\}")]
+    private static partial Regex LightRule();
+
+    [GeneratedRegex(@"var\(--sp-[\w-]+\)")]
+    private static partial Regex SpaceToken();
 
     [GeneratedRegex(@"([^{}]+)\{([^{}]*)\}")]
     private static partial Regex CssRule();

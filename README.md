@@ -24,7 +24,7 @@ Rhodes Terminal es la «terminal táctica» de un Doctor de Rhodes Island: un ca
 - **Filtros combinados** por clase, rareza y afiliación, con un contador «X de 335 operadores».
 - **Favoritos con CRUD completo:** se guardan en `localStorage`, con rol en el escuadrón, prioridad, calificación, promoción preferida y una nota táctica editable.
 - **Manejo de errores:** si una búsqueda no tiene resultados aparece un estado vacío, y si la API falla se muestra el motivo (500, 404, tiempo agotado o sin red) con un botón de reintento.
-- **Diseño responsivo** pensado primero para el celular, con menú de pantalla completa, y siguiendo las reglas visuales de [SKILLS.md](SKILLS.md).
+- **Diseño responsivo** pensado primero para el celular, con menú de pantalla completa, y con una identidad visual propia inspirada en la terminal PRTS de Arknights ([docs/design/frontend-aesthetics.md](docs/design/frontend-aesthetics.md)).
 - **Los 5 retos adicionales de la tarea:** tema oscuro y claro, orden alfabético y por rareza, estadísticas dinámicas, comparador de dos operadores e historial de búsquedas.
 
 Cuando el backend C# corre en el equipo, la página lo consulta primero (`http://localhost:5000/api/operators`) y sincroniza los favoritos con su CRUD REST. En GitHub Pages usa RhodesAPI y `localStorage` sin que el usuario note la diferencia.
@@ -154,16 +154,28 @@ Web-Project-Rhodes-AI/
 
 En el navegador, `localStorage` es la fuente de verdad. Con el backend activo, `createFavoritesSync` replica cada operación en la API y guarda el id remoto.
 
-### Diseño (SKILLS.md)
+### Diseño: «PRTS, la terminal de Rhodes Island»
 
-`style.css` sigue [SKILLS.md](SKILLS.md):
-- **Tipografía:** Geist como única familia (Geist Mono para los números), con tamaños de la escala de Tailwind.
-- **Medidas:** espaciado solo con los tokens permitidos y radios de Tailwind con la fórmula de radios anidados.
-- **Color:** fondos oscuros solo de la paleta aprobada; el único degradado es el del texto del hero.
-- **Movimiento:** curva `cubic-bezier(0.22, 1, 0.36, 1)`, animando solo `transform` y `opacity`, y respetando `prefers-reduced-motion`.
-- **Estructura y estados:** navegación flotante, tagline que se revela palabra por palabra, skeletons de carga y estados vacío y de error.
+La primera versión seguía al pie de la letra [SKILLS.md](SKILLS.md) y quedaba correcta pero genérica. La rediseñamos con las pautas de [docs/design/frontend-aesthetics.md](docs/design/frontend-aesthetics.md), que reemplazan a SKILLS.md donde chocan. Lo demás de SKILLS.md sigue vigente: estados de interacción, accesibilidad, redacción sin guiones y requisitos de publicación.
 
-`FrontendContractTests.cs` verifica estas reglas de forma automática.
+- **Tipografía:**
+  - *Big Shoulders Display*, condensada e industrial, para los títulos en mayúsculas.
+  - *Familjen Grotesk* para el texto.
+  - *Martian Mono* para datos, etiquetas e índices.
+  - Inter, Roboto, Arial y las fuentes del sistema quedan prohibidas.
+- **Color:** todo vive en variables CSS:
+  - **Tema oscuro:** tinta casi negra dominante, cian PRTS (`--accent`) como acento principal y naranja de originium (`--hot`) como acento cortante.
+  - **Tema claro:** papel de laboratorio con verde azulado profundo.
+  - Cada rareza tiene su color (`--r1` a `--r6`), que tiñe las estrellas y la afiliación de la tarjeta.
+- **Fondo con atmósfera:** resplandores radiales, una retícula técnica de 48 px y líneas de barrido de monitor, más bandas de franjas de peligro (`repeating-linear-gradient`) en el tagline, el terminal y el pie.
+- **Formas:** esquinas biseladas con `clip-path` en lugar de esquinas redondeadas. El borde es el fondo de la pieza y un `::before` hace de relleno. Las barras de estadísticas y del comparador son segmentadas, como una carga de batería.
+- **Movimiento:**
+  - Una entrada de página orquestada: la barra cae, el titular se revela línea por línea con `clip-path` y la bajada, el CTA y el terminal suben en cascada, todo con `animation-delay` y la variable `--d`.
+  - Las tarjetas entran escalonadas con `--i`, y un barrido de escáner recorre el retrato al pasar el cursor.
+  - Con `prefers-reduced-motion` todo queda quieto.
+- **Estructura:** índices numerados por sección («01 Inteligencia»), riel vertical y marca de agua «RHODES» en el hero, y un sello «En línea» en el terminal.
+
+`FrontendContractTests.cs` verifica estas decisiones de forma automática: el trío tipográfico, la ausencia de fuentes genéricas, la escala tipográfica y de espaciado por tokens, los biseles, el fondo en capas, los colores solo en variables y la entrada escalonada.
 
 ---
 
@@ -199,7 +211,7 @@ El proyecto se desarrolló con TDD en 6 secciones. En cada una, las pruebas se e
 | `FavoriteCrudTests.cs` y `FavoriteRepositoryContractTests.cs` | xUnit | CRUD, duplicados, contrato de Liskov y persistencia en JSON |
 | `OperatorServiceTests.cs` | xUnit | Adaptador del JSON de RhodesAPI y fallos HTTP 500 y 404 |
 | `ChallengesServiceTests.cs` | xUnit | Orden, distribuciones y comparador en el backend |
-| `FrontendContractTests.cs` | xUnit + AngleSharp | Estructura del DOM y reglas visuales de SKILLS.md |
+| `FrontendContractTests.cs` | xUnit + AngleSharp | Estructura del DOM y reglas del sistema visual (docs/design) |
 | `DeliverablesTests.cs` | xUnit | Este README y los archivos obligatorios de la tarea |
 | `tests/frontend/*.test.js` | `node --test` + jsdom | Normalización, `fetch()` con fallback, renderizado, filtros, favoritos y los 5 retos sobre el `index.html` real |
 
@@ -324,7 +336,7 @@ function sortOperators(operators, key) {
 - La distribución por clase cuenta en un `Map`, calcula el porcentaje y ordena de mayor a menor.
 - La de rareza recorre siempre `[6, 5, 4, 3, 2, 1]`, para que aparezcan las seis barras aunque alguna esté en 0.
 
-`renderStats` vuelca los números en `[data-stat]` y dibuja cada barra con la variable CSS `--value`. El CSS la aplica como `transform: scaleX(var(--value))`, de modo que solo se anima `transform`, como pide SKILLS.md. `initCatalog().apply()` la llama después de cada búsqueda, filtro u orden.
+`renderStats` vuelca los números en `[data-stat]` y dibuja cada barra con la variable CSS `--value`. El CSS la aplica como `clip-path: inset(0 calc((1 - var(--value)) * 100%) 0 0)`, que recorta la barra segmentada sin deformar sus segmentos (con `scaleX` se aplastaban). `initCatalog().apply()` la llama después de cada búsqueda, filtro u orden.
 
 **Reto 4: `compareOperators`.**
 
@@ -366,7 +378,7 @@ TDD funcionó como freno de seguridad. Ver primero la prueba en rojo nos confirm
 
 **2. ¿Qué diferencia existe entre HTML, CSS y JavaScript en el proyecto?**
 
-HTML (`index.html`) define la estructura y el significado del contenido: la navegación, las secciones, el buscador con su `<label>`, los selectores de filtro, los `<dialog>` del comparador y del editor de notas, y la `<template>` de la tarjeta que JavaScript clona. CSS (`style.css`) define la presentación: los tokens de color, tipografía y espaciado de SKILLS.md, los temas oscuro y claro, la grilla responsiva con sus breakpoints y las animaciones. JavaScript (`script.js`) aporta el comportamiento: descarga los datos con `fetch()`, los normaliza, filtra y ordena, pinta las tarjetas, guarda los favoritos en `localStorage` y responde a cada clic o tecla.
+HTML (`index.html`) define la estructura y el significado del contenido: la navegación, las secciones, el buscador con su `<label>`, los selectores de filtro, los `<dialog>` del comparador y del editor de notas, y la `<template>` de la tarjeta que JavaScript clona. CSS (`style.css`) define la presentación: los tokens de color, tipografía y espaciado, los temas oscuro y claro, las esquinas biseladas, el fondo con retícula, la grilla responsiva con sus breakpoints y las animaciones de entrada. JavaScript (`script.js`) aporta el comportamiento: descarga los datos con `fetch()`, los normaliza, filtra y ordena, pinta las tarjetas, guarda los favoritos en `localStorage` y responde a cada clic o tecla.
 
 **3. ¿Cómo funciona el buscador y el sistema de filtros que desarrollaron?**
 
@@ -378,7 +390,7 @@ Internamente, `fetchJson()` lanza un `ApiError`: `timeout` si pasó el tiempo l�
 
 **5. ¿Qué parte del código fue generada por la IA y qué modificaciones realizaron ustedes?**
 
-La IA (Claude) generó la mayor parte del código a partir del plan: el backend C#, `index.html`, `style.css`, `script.js` y las pruebas. Nuestro trabajo fue dirigir, revisar y aprobar cada sección. Al probar contra los datos reales se corrigió lo que fallaba: la URL de la API, el lector de números que no entendía `"block: 2"`, los retratos de un dominio que ya no existe (con el mapa de retratos verificado), el descarte de operadores sin estadísticas, los cortes de línea del título y del tagline que SKILLS.md no permite, el orden alfabético que dejaba primero a `'Justice Knight'` y la columna de porcentajes que partía «20,6 %». Cada corrección se hizo escribiendo primero una prueba que fallara y está explicada en este README.
+La IA (Claude) generó la mayor parte del código a partir del plan: el backend C#, `index.html`, `style.css`, `script.js` y las pruebas. Nuestro trabajo fue dirigir, revisar y aprobar cada sección. Al probar contra los datos reales se corrigió lo que fallaba: la URL de la API, el lector de números que no entendía `"block: 2"`, los retratos de un dominio que ya no existe (con el mapa de retratos verificado), el descarte de operadores sin estadísticas, los cortes de línea del título y del tagline que SKILLS.md no permite, un rediseño visual completo cuando la primera versión resultó demasiado genérica, el orden alfabético que dejaba primero a `'Justice Knight'` y la columna de porcentajes que partía «20,6 %». Cada corrección se hizo escribiendo primero una prueba que fallara y está explicada en este README.
 
 **6. ¿Cómo publicaron su aplicación mediante GitHub Pages?**
 

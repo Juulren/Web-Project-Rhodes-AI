@@ -56,7 +56,9 @@
     historyKey: "rhodes.history.v1",
     historyLimit: 8,
     themeKey: "rhodes.theme",
-    themeColors: { dark: "#181818", light: "#FAFAF9" }
+    themeColors: { dark: "#07090A", light: "#ECEAE3" },
+    // Tarjetas que entran en cascada; las siguientes comparten el último retardo.
+    staggerLimit: 8
   });
 
   const PROMOTIONS = { Base: "Base", Elite1: "Élite 1", Elite2: "Élite 2" };
@@ -878,13 +880,14 @@
 
     card.dataset.operatorId = op.id;
     card.dataset.class = op.className;
+    card.dataset.rarity = String(op.rarity);
 
     const img = $(".card-art");
     img.setAttribute("alt", `Retrato de ${op.name}`);
     withFallbackImage(img, op.art);
 
     const rarity = $(".card-rarity");
-    rarity.textContent = `${op.rarity}★`;
+    rarity.textContent = "★".repeat(op.rarity);
     rarity.setAttribute("aria-label", rarityLabel(op.rarity));
 
     $(".card-class i").className = `ph ${CLASS_ICONS[op.className] || "ph-user"}`;
@@ -925,7 +928,12 @@
   function renderOperators(doc, operators, { favorites = new Set() } = {}) {
     const grid = doc.getElementById("operator-grid");
     const fragment = doc.createDocumentFragment();
-    for (const op of operators) fragment.appendChild(createCard(doc, op, favorites));
+    operators.forEach((op, index) => {
+      const card = createCard(doc, op, favorites);
+      // Entrada escalonada: style.css usa --i en animation-delay.
+      card.style.setProperty("--i", String(Math.min(index, CONFIG.staggerLimit)));
+      fragment.appendChild(card);
+    });
     grid.replaceChildren(fragment);
     grid.setAttribute("aria-busy", "false");
     showState(doc, operators.length ? "ready" : "empty");
@@ -1257,9 +1265,10 @@
       .filter(op => op.art !== CONFIG.placeholderArt)
       .slice(0, 3);
 
-    list.replaceChildren(...picks.map(op => {
+    list.replaceChildren(...picks.map((op, index) => {
       const item = doc.createElement("li");
       item.className = "showcase-item";
+      item.style.setProperty("--i", String(index));
       const img = doc.createElement("img");
       img.setAttribute("alt", "");
       img.setAttribute("width", "48");

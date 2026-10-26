@@ -35,10 +35,23 @@ test("renderOperators pinta al menos 10 tarjetas con imagen, nombre, rareza, cla
   assert.ok(first.querySelector(".card-art").getAttribute("src").endsWith(".png"));
   assert.equal(first.querySelector(".card-name").textContent, "Operador A");
   assert.match(first.querySelector(".card-rarity").getAttribute("aria-label"), /1 estrella/);
+  assert.equal(first.querySelector(".card-rarity").textContent, "★");
+  assert.equal(cards[5].querySelector(".card-rarity").textContent, "★★★★★★");
+  assert.equal(first.dataset.rarity, "1");
   assert.equal(first.querySelector(".card-class span").textContent, "Vanguard");
   assert.equal(first.querySelector(".card-description").textContent, "Descripción del operador 1.");
   assert.equal(first.querySelector("[data-field='hp']").textContent, "1.673");
   assert.equal(first.dataset.operatorId, "operador-a");
+});
+
+test("las primeras tarjetas reciben un índice de entrada escalonada con tope", () => {
+  const doc = loadPage();
+  app.renderOperators(doc, sample());
+
+  const cards = doc.querySelectorAll("#operator-grid .operator-card");
+  assert.equal(cards[0].style.getPropertyValue("--i"), "0");
+  assert.equal(cards[3].style.getPropertyValue("--i"), "3");
+  assert.equal(cards[11].style.getPropertyValue("--i"), String(app.CONFIG.staggerLimit));
 });
 
 test("renderOperators reemplaza los skeletons y marca la grilla como lista", () => {

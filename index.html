@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rhodes Terminal · Explorador de operadores de Arknights</title>
   <meta name="description" content="Busca, filtra y compara más de 330 operadores de Arknights con datos en vivo de RhodesAPI. Guarda favoritos con notas tácticas en tu navegador.">
-  <meta name="theme-color" content="#181818">
+  <meta name="theme-color" content="#07090A">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Rhodes Terminal · Explorador de operadores de Arknights">
@@ -17,7 +17,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Familjen+Grotesk:wght@400;500;600;700&family=Martian+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
   <link rel="stylesheet" href="style.css">
@@ -73,32 +73,39 @@
 
     <!-- ============ Hero ============ -->
     <section id="hero" class="hero section">
+      <p class="hero-watermark" aria-hidden="true">RHODES</p>
+      <p class="hero-rail" aria-hidden="true">PRTS · Terminal de operadores · Rhodes Island</p>
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow"><i class="ph ph-broadcast" aria-hidden="true"></i> Terminal táctica de Rhodes Island</p>
-          <h1 class="hero-title">Arma tu escuadrón ideal<br>con datos reales<br>de cada operador</h1>
-          <p class="hero-subtitle">Busca, filtra y compara operadores de Arknights por clase, rareza y facción. Guarda tus favoritos con notas tácticas que siguen ahí cuando vuelves.</p>
-          <a class="btn btn-primary" href="#catalogo">
+          <p class="eyebrow rise" style="--d: 0"><i class="ph ph-broadcast" aria-hidden="true"></i> Terminal táctica de Rhodes Island</p>
+          <h1 class="hero-title">
+            <span class="hero-line" style="--d: 1">Arma tu escuadrón ideal</span>
+            <span class="hero-line hero-line--outline" style="--d: 2">con datos reales</span>
+            <span class="hero-line hero-line--accent" style="--d: 3">de cada operador</span>
+          </h1>
+          <p class="hero-subtitle rise" style="--d: 4">Busca, filtra y compara operadores de Arknights por clase, rareza y facción. Guarda tus favoritos con notas tácticas que siguen ahí cuando vuelves.</p>
+          <a class="btn btn-primary rise" href="#catalogo" style="--d: 5">
             <span>Explorar operadores</span>
             <i class="ph ph-arrow-down" aria-hidden="true"></i>
           </a>
-          <p class="hero-proof">
+          <p class="hero-proof rise" style="--d: 6">
             <i class="ph ph-database" aria-hidden="true"></i>
             <span><strong id="hero-total" class="mono">335</strong> operadores en vivo desde RhodesAPI · gratis y sin cuenta</span>
           </p>
         </div>
 
-        <aside class="hero-visual" aria-label="Vista previa del escuadrón">
+        <aside class="hero-visual rise" style="--d: 4" aria-label="Vista previa del escuadrón">
           <div class="terminal-card">
-            <div class="terminal-head">
-              <span class="terminal-dot" aria-hidden="true"></span>
-              <span class="mono">escuadrón · vista previa</span>
+            <div class="terminal-head mono">
+              <span class="terminal-status"><span class="terminal-dot" aria-hidden="true"></span>En línea</span>
+              <span>Escuadrón · vista previa</span>
             </div>
             <ul id="hero-showcase" class="showcase-list">
               <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
               <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
               <li class="showcase-item is-loading"><span class="sk sk-avatar"></span><span class="sk sk-line"></span></li>
             </ul>
+            <span class="hazard terminal-foot" aria-hidden="true"></span>
           </div>
         </aside>
       </div>
@@ -108,6 +115,7 @@
     <section id="stats-panel" class="section reveal" aria-labelledby="stats-title">
       <div class="container">
         <header class="section-head">
+          <p class="section-kicker"><span>01</span> Inteligencia</p>
           <h2 id="stats-title">Inteligencia del grupo visible</h2>
           <p>Se recalcula con cada búsqueda y cada filtro, usando la promoción más alta disponible.</p>
         </header>
@@ -152,6 +160,7 @@
     <section id="catalogo" class="section" aria-labelledby="catalog-title">
       <div class="container">
         <header class="section-head">
+          <p class="section-kicker"><span>02</span> Archivo de personal</p>
           <h2 id="catalog-title">Catálogo de operadores</h2>
           <p>Escribe un nombre, una facción o una palabra de su biografía. Los resultados cambian mientras escribes.</p>
         </header>
@@ -273,6 +282,7 @@
       <div class="container">
         <header class="section-head section-head-row">
           <div>
+            <p class="section-kicker"><span>03</span> Escuadrón</p>
             <h2 id="favorites-title">Tu escuadrón de favoritos</h2>
             <p>Asigna rol, prioridad y una nota táctica a cada operador. Todo se guarda en este navegador.</p>
           </div>
@@ -294,6 +304,7 @@
     <section id="how" class="section reveal" aria-labelledby="how-title">
       <div class="container">
         <header class="section-head">
+          <p class="section-kicker"><span>04</span> Protocolo</p>
           <h2 id="how-title">Cómo funciona</h2>
           <p>Tres pasos para pasar de 335 nombres a un escuadrón con plan.</p>
         </header>
@@ -324,6 +335,7 @@
     <section id="faq" class="section reveal" aria-labelledby="faq-title">
       <div class="container container-narrow">
         <header class="section-head">
+          <p class="section-kicker"><span>05</span> Consultas</p>
           <h2 id="faq-title">Preguntas frecuentes</h2>
         </header>
         <div class="faq-list">
