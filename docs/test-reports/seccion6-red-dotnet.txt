@@ -1,0 +1,286 @@
+﻿  Determining projects to restore...
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg [C:\Web-Project-Rhodes-AI\Backend\RhodesAI.sln]
+  All projects are up-to-date for restore.
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
+  RhodesAI.Backend -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\bin\Debug\net8.0\RhodesAI.Backend.dll
+  RhodesAI.Tests -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll
+Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+dotnet : [xUnit.net 00:00:00.27]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Retos 
+adicionales", minWords: 60) [FAIL]
+At line:1 char:339
++ ... AI\Backend; dotnet test RhodesAI.sln *> ..\docs\test-reports\seccion6 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([xUnit.net 00:0...rds: 60) [FAIL]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Dificultades", 
+minWords: 60) [FAIL]
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Retos adicionales", minWords: 60) [4 ms]
+  Error Message:
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Preguntas para 
+la presentación", minWords: 200) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Modificación 
+explicada", minWords: 120) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Reflexión del 
+equipo", minWords: 60) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Error 
+encontrado y cómo lo resolvimos", minWords: 60) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Integrantes", 
+minWords: 3) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Instrucciones 
+de uso", minWords: 80) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Pruebas", 
+minWords: 40) [FAIL]
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Dificultades", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Preguntas para la presentación", minWords: 200) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Modificación explicada", minWords: 120) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Reflexión del equipo", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Error encontrado y cómo lo resolvimos", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Integrantes", minWords: 3) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Instrucciones de uso", minWords: 80) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Pruebas", minWords: 40) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Tres prompts importantes", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Respuesta de la IA que requirió correcciones", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Tres prompts 
+importantes", minWords: 60) [FAIL]
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Respuesta de 
+la IA que requirió correcciones", minWords: 60) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Arquitectura 
+técnica", minWords: 150) [FAIL]
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Arquitectura técnica", minWords: 150) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Descripción", 
+minWords: 60) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Uso de 
+inteligencia artificial", minWords: 40) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué 
+diferencia existe entre HTML, CSS y JavaScrip"···) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué 
+sucede") [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué 
+función cumple fetch() dentro de su aplicació"···) [FAIL]
+[xUnit.net 00:00:00.28]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Cómo 
+publicaron su aplicación mediante GitHub Pag"···) [FAIL]
+[xUnit.net 00:00:00.29]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué 
+parte del código fue generada por la IA y qué"···) [FAIL]
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Descripción", minWords: 60) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(heading: "Uso de inteligencia artificial", minWords: 40) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_HasSectionWithRealContent(String heading, Int32 minWords) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 79
+   at InvokeStub_DeliverablesTests.Readme_HasSectionWithRealContent(Object, Span`1)
+[xUnit.net 00:00:00.29]     RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Cómo 
+funciona el buscador") [FAIL]
+[xUnit.net 00:00:00.29]     RhodesAI.Tests.DeliverablesTests.RootFile_Exists(file: "README.md") [FAIL]
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué diferencia existe entre HTML, CSS y JavaScrip"···) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué sucede") [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at InvokeStub_DeliverablesTests.Readme_AnswersEveryPresentationQuestion(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué función cumple fetch() dentro de su aplicació"···) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at InvokeStub_DeliverablesTests.Readme_AnswersEveryPresentationQuestion(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Cómo publicaron su aplicación mediante GitHub Pag"···) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at InvokeStub_DeliverablesTests.Readme_AnswersEveryPresentationQuestion(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Qué parte del código fue generada por la IA y qué"···) [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at InvokeStub_DeliverablesTests.Readme_AnswersEveryPresentationQuestion(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(question: "¿Cómo funciona el buscador") [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_AnswersEveryPresentationQuestion(String question) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 142
+   at InvokeStub_DeliverablesTests.Readme_AnswersEveryPresentationQuestion(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.RootFile_Exists(file: "README.md") [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.RootFile_Exists(String file) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 57
+   at InvokeStub_DeliverablesTests.RootFile_Exists(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.RootFile_Exists(file: ".nojekyll") [< 1 ms]
+  Error Message:
+   Falta .nojekyll en la raíz.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.RootFile_Exists(String file) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 57
+   at InvokeStub_DeliverablesTests.RootFile_Exists(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_ExplainsOopMvcEverySolidPrincipleAndCrud [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_ExplainsOopMvcEverySolidPrincipleAndCrud() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 98
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_CorrectedAnswerShowsOriginalAndFix [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_CorrectedAnswerShowsOriginalAndFix() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 116
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_LinksRepositoryPagesIssuesAndPullRequest [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_LinksRepositoryPagesIssuesAndPullRequest() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 86
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_RelativeLinksPointToExistingFiles [1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_RelativeLinksPointToExistingFiles() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 155
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_ModificationCoversTheFiveChallenges [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_ModificationCoversTheFiveChallenges() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 126
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DeliverablesTests.Readme_DocumentsThreeNumberedPrompts [< 1 ms]
+  Error Message:
+   Falta README.md en la raíz del repositorio.
+  Stack Trace:
+     at RhodesAI.Tests.DeliverablesTests.Readme() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 24
+   at RhodesAI.Tests.DeliverablesTests.Readme_DocumentsThreeNumberedPrompts() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DeliverablesTests.cs:line 109
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.RootFile_Exists(file: ".nojekyll") [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_ExplainsOopMvcEverySolidPrincipleAndCrud [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_CorrectedAnswerShowsOriginalAndFix [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_LinksRepositoryPagesIssuesAndPullRequest [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_RelativeLinksPointToExistingFiles [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_ModificationCoversTheFiveChallenges [FAIL]
+[xUnit.net 00:00:00.30]     RhodesAI.Tests.DeliverablesTests.Readme_DocumentsThreeNumberedPrompts [FAIL]
+
+Failed!  - Failed:    28, Passed:   148, Skipped:     0, Total:   176, Duration: 442 ms - RhodesAI.Tests.dll (net8.0)

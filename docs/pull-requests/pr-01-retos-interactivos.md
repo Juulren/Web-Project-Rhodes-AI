@@ -1,4 +1,4 @@
-# Pull Request #1: los 5 retos interactivos
+﻿# Pull Request #1: los 5 retos interactivos
 
 **Rama:** `feature/retos-interactivos` → `main`
 
@@ -24,6 +24,6 @@ En HP, ATK, DEF, RES y bloqueo gana el valor **mayor**. En coste de DP e interva
 - **GREEN:** 119/119 en JS (`npm test`) y 142/142 en xUnit (`dotnet test Backend/RhodesAI.sln`). Ver `docs/test-reports/seccion5-green-*.txt`.
 - **Navegador:** comprobado con los 335 operadores reales: filtro Sniper 6★ con orden Z a A, comparador Typhon contra W, tema claro persistente y chips del historial.
 
-Relacionado con el Issue #2: *Implementación del panel comparador de 2 operadores y cálculo de estadísticas dinámicas en tiempo real*.
+Relacionado con el Issue #3: *Implementación del panel comparador de 2 operadores y cálculo de estadísticas dinámicas en tiempo real*.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
