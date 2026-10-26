@@ -483,3 +483,6 @@ $RECYCLE.BIN/
 
 # Configuracion local de Claude Code
 .claude/
+
+# Dependencias de pruebas del frontend
+node_modules/

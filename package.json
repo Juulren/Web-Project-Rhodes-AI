@@ -1,0 +1,12 @@
+{
+  "name": "web-project-rhodes-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rhodes Terminal: explorador interactivo de operadores de Arknights",
+  "scripts": {
+    "test": "node --test \"tests/frontend/*.test.js\""
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
+}

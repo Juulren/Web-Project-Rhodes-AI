@@ -1,0 +1,51 @@
+﻿
+> web-project-rhodes-ai@1.0.0 test
+> node --test "tests/frontend/*.test.js"
+
+✔ fetchJson convierte un 500 en ApiError de tipo http con su código (34.3069ms)
+✔ fetchJson convierte un 404 en ApiError con status 404 (0.8613ms)
+✔ fetchJson aborta cuando se supera el tiempo límite (26.3684ms)
+✔ fetchJson distingue fallos de red y JSON inválido (2.1192ms)
+✔ en localhost se consulta primero el backend C# (1.4796ms)
+✔ si el backend no responde se usa RhodesAPI y se guarda la caché (2.1091ms)
+✔ en GitHub Pages nunca se intenta el backend local (0.7444ms)
+✔ una caché vigente evita descargar de nuevo los 5 MB del catálogo (0.2278ms)
+✔ forceRefresh ignora la caché vigente (1.0768ms)
+✔ si todas las fuentes fallan se usa la caché vencida y se marca como desactualizada (0.7434ms)
+✔ sin fuentes ni caché se propaga el último ApiError (0.3732ms)
+✔ si el mapa de retratos falla el catálogo carga igual (0.6486ms)
+✔ describeError explica cada fallo con un mensaje específico (0.3421ms)
+✔ parseNumber acepta números, texto con espacios, prefijos y ceros a la izquierda (2.2144ms)
+✔ normalizeOperator mapea un operador completo usando el tier más alto (1.6963ms)
+✔ la afiliación puede llegar como texto o como arreglo (0.9812ms)
+✔ block con formato 'block: 2' se usa cuando el tier no lo trae (0.6623ms)
+✔ sin bloque e2max se usa el de Elite 1 y se informa la promoción real (0.557ms)
+✔ un tier con valores vacíos se ignora y nunca produce NaN (0.5109ms)
+✔ se descarta un operador cuyos tiers sólo traen el objeto de error de RhodesAPI (0.2765ms)
+✔ los retratos usan el mapa local porque ak.gamepress.gg ya no existe (0.3284ms)
+✔ sin entrada en el mapa, el charId del enlace genera la ruta del retrato (0.2104ms)
+✔ sin charId ni entrada en el mapa se usa el placeholder local (0.3356ms)
+✔ la descripción vacía cae en la biografía (0.1612ms)
+✔ se descartan registros con rareza fuera de 1 a 6, clase desconocida o sin nombre (0.1449ms)
+✔ normalizeBackendOperator adapta el OperatorDto del backend C# (0.3955ms)
+✔ normalizeList elimina inválidos y duplicados y ordena por nombre (2.5447ms)
+✔ normalizeList ordena ignorando comillas y acentos (0.6065ms)
+✔ normalizeList rechaza respuestas que no son arreglos (0.5992ms)
+✔ renderOperators pinta al menos 10 tarjetas con imagen, nombre, rareza, clase y descripción (170.4805ms)
+✔ renderOperators reemplaza los skeletons y marca la grilla como lista (63.8091ms)
+✔ una imagen rota se sustituye por el placeholder local (53.3558ms)
+✔ showState('error') muestra el aviso con el mensaje y oculta la grilla (21.0975ms)
+✔ showState('empty') muestra la vista vacía y showState('ready') la oculta (20.4946ms)
+✔ renderOperators con lista vacía activa el estado vacío (26.9631ms)
+✔ boot muestra el error con reintento y luego carga al reintentar (69.7565ms)
+✔ boot rellena la vista previa del hero con tres operadores (51.8913ms)
+✔ el menú móvil alterna aria-expanded y la clase is-open (24.8783ms)
+✔ el tagline se divide en palabras individuales para el revelado (36.3548ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1313.521
