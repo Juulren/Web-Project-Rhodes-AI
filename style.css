@@ -73,7 +73,7 @@
   --grid-line: rgba(43, 227, 207, 0.055);
   --scan: rgba(43, 227, 207, 0.22);
   --scanline: rgba(255, 255, 255, 0.022);
-  --nav-surface: rgba(13, 17, 19, 0.8);
+  --nav-surface: rgba(13, 17, 19, 0.94);
   --menu-surface: rgba(7, 9, 10, 0.96);
   --backdrop: rgba(2, 4, 5, 0.8);
   --skeleton: #1C2529;
@@ -112,7 +112,7 @@
   --grid-line: rgba(15, 19, 20, 0.055);
   --scan: rgba(0, 117, 109, 0.16);
   --scanline: rgba(0, 0, 0, 0.018);
-  --nav-surface: rgba(246, 244, 238, 0.82);
+  --nav-surface: rgba(246, 244, 238, 0.95);
   --menu-surface: rgba(236, 234, 227, 0.97);
   --backdrop: rgba(15, 19, 20, 0.45);
   --skeleton: #D6D2C7;
@@ -532,6 +532,7 @@ button, input, select, textarea {
   animation: drop-in var(--t-slow) var(--ease-out) both;
 }
 
+/* Barra compacta y centrada, del tamaño de su contenido, que flota sobre la página */
 .nav-bar {
   --cut: 10px;
   position: relative;
@@ -540,33 +541,23 @@ button, input, select, textarea {
   justify-content: space-between;
   gap: var(--sp-4);
   width: 100%;
-  max-width: 1240px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);
   pointer-events: auto;
 }
 
-/* Fondo translúcido en un pseudo elemento: así el panel móvil fixed no queda atrapado */
+/* Fondo casi opaco con borde completo, en un pseudo elemento para que el panel móvil fixed no quede atrapado */
 .nav-bar::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background-color: var(--nav-surface);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
-}
-
-.nav-bar::after {
-  content: "";
-  position: absolute;
-  left: var(--cut);
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background-color: var(--line-strong);
-  pointer-events: none;
 }
 
 .brand {
@@ -623,8 +614,7 @@ button, input, select, textarea {
 }
 
 .menu-bar:last-child {
-  transform: translateY(4px) scaleX(0.6);
-  transform-origin: right center;
+  transform: translate(4px, 4px) scaleX(0.6);
 }
 
 .menu-toggle[aria-expanded="true"] .menu-bar:first-child {
@@ -632,7 +622,7 @@ button, input, select, textarea {
 }
 
 .menu-toggle[aria-expanded="true"] .menu-bar:last-child {
-  transform: rotate(-45deg);
+  transform: rotate(-45deg) scaleX(1);
 }
 
 /* Menú móvil: panel de altura completa */
@@ -659,32 +649,21 @@ button, input, select, textarea {
 
 .menu-list {
   display: grid;
-  gap: var(--sp-2);
-  counter-reset: menu;
+  gap: var(--sp-3);
 }
 
+/* En el panel móvil: titulares grandes, uno por línea */
 .menu-link {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--sp-3);
+  display: inline-block;
   font-family: var(--font-display);
   font-size: var(--fs-3xl);
   font-weight: 800;
   text-transform: uppercase;
   text-decoration: none;
   opacity: 0;
-  transform: translateX(-24px);
+  transform: translateY(24px);
   transition: opacity var(--t-med) var(--ease-out), transform var(--t-med) var(--ease-out),
-    color var(--t-fast) var(--ease-out);
-}
-
-.menu-link::before {
-  counter-increment: menu;
-  content: "0" counter(menu);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  font-weight: 400;
+    color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out);
 }
 
 .menu-link[aria-current="page"] {
@@ -693,7 +672,7 @@ button, input, select, textarea {
 
 .site-menu.is-open .menu-link {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 .menu-list li:nth-child(2) .menu-link { transition-delay: 50ms; }
@@ -726,9 +705,10 @@ button, input, select, textarea {
   to { clip-path: inset(0 0 0 0); }
 }
 
+/* Solo opacidad: cualquier transform en .site-header atraparía al panel móvil fixed dentro de la barra */
 @keyframes drop-in {
-  from { opacity: 0; transform: translateY(-24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes blink {
@@ -770,6 +750,7 @@ button, input, select, textarea {
 .hero-grid {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--sp-7);
 }
 
@@ -824,6 +805,7 @@ button, input, select, textarea {
 
 .terminal-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-3);
@@ -2042,23 +2024,23 @@ button, input, select, textarea {
     visibility: visible;
   }
 
+  /* En escritorio: una fila de enlaces legibles dentro de la barra */
   .menu-list {
     display: flex;
     gap: var(--sp-1);
   }
 
   .menu-link {
+    --cut: var(--cut-sm);
     padding: var(--sp-2) var(--sp-3);
-    font-family: var(--font-mono);
-    font-size: var(--fs-2xs);
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    color: var(--fg-muted);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-transform: none;
     opacity: 1;
     transform: none;
-  }
-
-  .menu-link::before {
-    font-size: var(--fs-2xs);
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
   }
 
   .menu-list li .menu-link {
@@ -2066,7 +2048,18 @@ button, input, select, textarea {
   }
 
   .menu-link:hover {
+    background-color: var(--ink-3);
+    color: var(--fg);
+  }
+
+  .menu-link[aria-current="page"] {
     color: var(--accent);
+    box-shadow: inset 0 -2px 0 var(--accent);
+  }
+
+  .menu-link:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--accent);
   }
 
   .metrics-grid {

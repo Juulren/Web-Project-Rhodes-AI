@@ -7,4 +7,4 @@ C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning 
 Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
 A total of 1 test files matched the specified pattern.
 
-Passed!  - Failed:     0, Passed:   181, Skipped:     0, Total:   181, Duration: 829 ms - RhodesAI.Tests.dll (net8.0)
+Passed!  - Failed:     0, Passed:   181, Skipped:     0, Total:   181, Duration: 717 ms - RhodesAI.Tests.dll (net8.0)
