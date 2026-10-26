@@ -1,0 +1,454 @@
+﻿Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+dotnet : [xUnit.net 00:00:00.16]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: 
+Vanguard) [FAIL]
+At line:1 char:339
++ ... AI\Backend; dotnet test RhodesAI.sln --no-build *> ..\docs\test-repor ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([xUnit.net 00:0...anguard) [FAIL]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[xUnit.net 00:00:00.16]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: 
+Defender) [FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: 
+Supporter) [FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: 
+Specialist) [FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Guard) 
+[FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Sniper) 
+[FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Caster) 
+[FAIL]
+[xUnit.net 00:00:00.17]     RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Medic) 
+[FAIL]
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Vanguard) [2 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Defender) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Supporter) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Specialist) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Guard) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Sniper) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Caster) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(cls: Medic) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(OperatorClass cls) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 184
+   at InvokeStub_DomainTests.CombatOperator_ProducesPositivePowerForEveryClass(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.DomainTests.CalculateCombatPower_GrowsWithPromotion [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.FavoriteCrudTests.Repository_RejectsDuplicateIds [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.FavoriteCrudTests.Delete_AllowsReAddingSameOperator [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.FavoriteCrudTests.Repository_UpdateReturnsFalseForUnknownEntity [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.FavoriteCrudTests.Create_StoresFavoriteWithAllFields [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(name: "") [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(name: "   ") [FAIL]
+[xUnit.net 00:00:00.19]     RhodesAI.Tests.DomainTests.Operator_CannotStartAbovePromotionAllowedByRarity [FAIL]
+  Failed RhodesAI.Tests.DomainTests.CalculateCombatPower_GrowsWithPromotion [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CalculateCombatPower_GrowsWithPromotion() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 128
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Repository_RejectsDuplicateIds [2 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.FavoriteCrudTests.Repository_RejectsDuplicateIds() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 161
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.FavoriteCrudTests.Delete_AllowsReAddingSameOperator [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Delete_AllowsReAddingSameOperator() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 149
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.FavoriteCrudTests.Repository_UpdateReturnsFalseForUnknownEntity [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.FavoriteCrudTests.Repository_UpdateReturnsFalseForUnknownEntity() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 171
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.FavoriteCrudTests.Create_StoresFavoriteWithAllFields [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Create_StoresFavoriteWithAllFields() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 32
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(name: "") [2 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.Operator_ExposesReadOnlyStatsDictionary [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.Promote_AdvancesAndTouchesEntity [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.FavoriteCrudTests.Create_PropagatesDomainValidation [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.CombatOperator_OverridesCombatPowerThroughBaseReference [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(rarity: 0) [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.FavoriteCrudTests.Create_RejectsDuplicateOperatorIgnoringCase [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(rarity: 7) [FAIL]
+[xUnit.net 00:00:00.20]     RhodesAI.Tests.DomainTests.Promote_RejectsDemotionAndRarityCap [FAIL]
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(String name) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 56
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.<>c__DisplayClass5_0.<Operator_RejectsEmptyName>b__0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 56
+  Failed RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(name: "   ") [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Operator_RejectsEmptyName(String name) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 56
+   at InvokeStub_DomainTests.Operator_RejectsEmptyName(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.<>c__DisplayClass5_0.<Operator_RejectsEmptyName>b__0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 56
+  Failed RhodesAI.Tests.DomainTests.Operator_CannotStartAbovePromotionAllowedByRarity [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Operator_CannotStartAbovePromotionAllowedByRarity() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 84
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.<>c.<Operator_CannotStartAbovePromotionAllowedByRarity>b__9_0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 85
+  Failed RhodesAI.Tests.DomainTests.Operator_ExposesReadOnlyStatsDictionary [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.ThreeTiers() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 12
+   at RhodesAI.Tests.DomainTests.Operator_ExposesReadOnlyStatsDictionary() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 76
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DomainTests.Promote_AdvancesAndTouchesEntity [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.ThreeTiers() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 12
+   at RhodesAI.Tests.DomainTests.Promote_AdvancesAndTouchesEntity() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 91
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Create_PropagatesDomainValidation [1 ms]
+  Error Message:
+   Assert.ThrowsAny() Failure: Exception type was not compatible
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.FavoriteCrudTests.Create_PropagatesDomainValidation() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 55
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.<Create_PropagatesDomainValidation>b__6_0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 55
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_OverridesCombatPowerThroughBaseReference [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_OverridesCombatPowerThroughBaseReference() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 139
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(rarity: 0) [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(Int32 rarity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 48
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.<>c__DisplayClass4_0.<Operator_RejectsRarityOutsideOneToSix>b__0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 48
+  Failed RhodesAI.Tests.FavoriteCrudTests.Create_RejectsDuplicateOperatorIgnoringCase [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Create_RejectsDuplicateOperatorIgnoringCase() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 45
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(rarity: 7) [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Operator_RejectsRarityOutsideOneToSix(Int32 rarity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 48
+   at InvokeStub_DomainTests.Operator_RejectsRarityOutsideOneToSix(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.<>c__DisplayClass4_0.<Operator_RejectsRarityOutsideOneToSix>b__0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 48
+  Failed RhodesAI.Tests.DomainTests.Promote_RejectsDemotionAndRarityCap [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.ThreeTiers() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 12
+   at RhodesAI.Tests.DomainTests.Promote_RejectsDemotionAndRarityCap() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 105
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.GetById_ReturnsMatchOrNull [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.GetById_ReturnsMatchOrNull [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(value: 0) 
+[FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(value: 6) 
+[FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Favorite_RequiresOperatorName [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.Update_ChangesOnlyProvidedFields [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Operator_GetsSlugIdAndTimestamps [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.Delete_RemovesFavorite [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.GetStatsFor_FallsBackToHighestAvailableTier [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.Delete_ReturnsFalseWhenMissing [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Favorite_UpdateTacticalNotes_TrimsAndTouches [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.GetAll_ReturnsEveryFavorite [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.CombatOperator_SniperValuesAttackMoreThanDefender [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.OperatorStats_ComputesDamagePerSecond [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.Update_CanChangeRolePriorityAndPromotion [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.CombatOperator_DefenderValuesDefenseMoreThanSniper [FAIL]
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.GetById_ReturnsMatchOrNull() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 76
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(value: 0) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(Int32 value) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 215
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(value: 6) [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(Int32 value) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 215
+   at InvokeStub_DomainTests.Favorite_RejectsPriorityAndRatingOutsideOneToFive(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed RhodesAI.Tests.DomainTests.Favorite_RequiresOperatorName [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.Favorite_RequiresOperatorName() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 224
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.DomainTests.<>c.<Favorite_RequiresOperatorName>b__21_0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 224
+  Failed RhodesAI.Tests.FavoriteCrudTests.Update_ChangesOnlyProvidedFields [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Update_ChangesOnlyProvidedFields() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 87
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.Operator_GetsSlugIdAndTimestamps [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.Operator_GetsSlugIdAndTimestamps() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 33
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Delete_RemovesFavorite [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Delete_RemovesFavorite() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 133
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.GetStatsFor_FallsBackToHighestAvailableTier [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.ThreeTiers() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 12
+   at RhodesAI.Tests.DomainTests.GetStatsFor_FallsBackToHighestAvailableTier() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 116
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Delete_ReturnsFalseWhenMissing [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.DeleteAsync(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 14
+   at RhodesAI.Tests.FavoriteCrudTests.Delete_ReturnsFalseWhenMissing() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 143
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.Favorite_UpdateTacticalNotes_TrimsAndTouches [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.DomainTests.Favorite_UpdateTacticalNotes_TrimsAndTouches() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 193
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.GetAll_ReturnsEveryFavorite [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.GetAll_ReturnsEveryFavorite() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 63
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_SniperValuesAttackMoreThanDefender [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_SniperValuesAttackMoreThanDefender() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 162
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.DomainTests.OperatorStats_ComputesDamagePerSecond [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.OperatorStats_ComputesDamagePerSecond() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 69
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Update_CanChangeRolePriorityAndPromotion [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 10
+   at RhodesAI.Tests.FavoriteCrudTests.Update_CanChangeRolePriorityAndPromotion() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 108
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.CombatOperator_DefenderValuesDefenseMoreThanSniper [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.SampleStats(Int32 def, Int32 atk) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 10
+   at RhodesAI.Tests.DomainTests.CombatOperator_DefenderValuesDefenseMoreThanSniper() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 148
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.Favorite_RejectsNotesLongerThanLimit [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.FavoriteCrudTests.Update_ReturnsNullWhenMissing [FAIL]
+[xUnit.net 00:00:00.21]     RhodesAI.Tests.DomainTests.OperatorStats_RejectsNegativeValuesAndZeroInterval [FAIL]
+  Failed RhodesAI.Tests.DomainTests.Favorite_RejectsNotesLongerThanLimit [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Base.BaseEntity..ctor(String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Base\BaseEntity.cs:line 15
+   at RhodesAI.Backend.Models.Domain.FavoriteSquadMember..ctor(String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, String id) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 21
+   at RhodesAI.Tests.DomainTests.Favorite_RejectsNotesLongerThanLimit() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 206
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed RhodesAI.Tests.FavoriteCrudTests.Update_ReturnsNullWhenMissing [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.UpdateAsync(String id, FavoriteUpdateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 13
+   at RhodesAI.Tests.FavoriteCrudTests.Update_ReturnsNullWhenMissing() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteCrudTests.cs:line 125
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.DomainTests.OperatorStats_RejectsNegativeValuesAndZeroInterval [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: Exception type was not an exact match
+Expected: typeof(System.ArgumentOutOfRangeException)
+Actual:   typeof(System.NotImplementedException)
+---- System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Tests.DomainTests.OperatorStats_RejectsNegativeValuesAndZeroInterval() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 62
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at RhodesAI.Backend.Models.Domain.OperatorStats..ctor(Int32 hp, Int32 atk, Int32 def, Int32 res, Int32 cost, Int32 block, Double attackInterval, Int32 redeployTime) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\OperatorStats.cs:line 18
+   at RhodesAI.Tests.DomainTests.<>c.<OperatorStats_RejectsNegativeValuesAndZeroInterval>b__6_0() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\DomainTests.cs:line 62
+
+Failed!  - Failed:    42, Passed:     1, Skipped:     0, Total:    43, Duration: 52 ms - RhodesAI.Tests.dll (net8.0)
