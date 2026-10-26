@@ -486,3 +486,6 @@ $RECYCLE.BIN/
 
 # Dependencias de pruebas del frontend
 node_modules/
+
+# Datos locales del backend
+Backend/RhodesAI.Backend/App_Data/

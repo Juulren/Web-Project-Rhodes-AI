@@ -1144,6 +1144,47 @@ button, input, select, textarea {
   grid-column: 1 / -1;
 }
 
+.favorite-info h3 {
+  font-size: var(--text-lg);
+  line-height: var(--leading-lg);
+}
+
+.favorite-note.is-empty {
+  color: var(--fg-muted);
+}
+
+/* =====================================================================
+   Aviso de confirmación (toast)
+   ===================================================================== */
+
+.toast {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--space-300);
+  z-index: 60;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin: 0 auto;
+  padding: var(--space-75) var(--space-200);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background-color: var(--surface-strong);
+  color: var(--fg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity var(--duration-color) var(--ease), transform var(--duration-layout) var(--ease);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* =====================================================================
    Cómo funciona, preguntas y llamado final
    ===================================================================== */

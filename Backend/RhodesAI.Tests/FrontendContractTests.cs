@@ -213,6 +213,14 @@ public partial class FrontendContractTests
     }
 
     [Fact]
+    public void StatusToast_IsPoliteLiveRegion()
+    {
+        var toast = Required(Page(), "#status-toast");
+        Assert.Equal("status", toast.GetAttribute("role"));
+        Assert.Equal("polite", toast.GetAttribute("aria-live"));
+    }
+
+    [Fact]
     public void StatsPanel_ExposesEveryDynamicMetric()
     {
         var doc = Page();

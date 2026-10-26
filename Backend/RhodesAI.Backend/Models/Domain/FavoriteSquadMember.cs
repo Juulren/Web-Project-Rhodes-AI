@@ -29,6 +29,16 @@ public class FavoriteSquadMember : BaseEntity
         EnsureValid();
     }
 
+    /// <summary>Reconstruye un favorito persistido conservando su identidad y sus fechas.</summary>
+    public static FavoriteSquadMember Restore(string id, string operatorName, string squadRole, int priority, int rating,
+        PromotionLevel preferredPromotion, string tacticalNotes, DateTime createdAt, DateTime updatedAt)
+    {
+        // El constructor vuelve a validar todas las invariantes del dato persistido.
+        var favorite = new FavoriteSquadMember(operatorName, squadRole, priority, rating, preferredPromotion, tacticalNotes, id);
+        favorite.RestoreAudit(createdAt, updatedAt);
+        return favorite;
+    }
+
     public void UpdateTacticalNotes(string notes)
     {
         TacticalNotes = CleanNotes(notes);

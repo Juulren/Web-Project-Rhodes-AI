@@ -4,9 +4,11 @@
      1. Configuración y errores
      2. Normalización del JSON irregular de RhodesAPI y del backend C#
      3. Datos: fetch() con tiempo límite, fallback híbrido y caché local
-     4. Renderizado de tarjetas y estados (carga, vacío, error)
-     5. Interfaz base: navegación, revelado al hacer scroll y tagline
-     6. Arranque
+     4. Búsqueda y filtros combinados
+     5. Favoritos: CRUD en localStorage y sincronización con el backend C#
+     6. Renderizado de tarjetas, favoritos y estados (carga, vacío, error)
+     7. Interfaz base: navegación, revelado al hacer scroll y tagline
+     8. Arranque
    El archivo funciona en el navegador (window.RhodesTerminal) y en Node
    (module.exports) para poder probar cada capa por separado.
    ===================================================================== */
@@ -43,8 +45,16 @@
     backendTimeoutMs: 2500,
     publicTimeoutMs: 60000,
     portraitTimeoutMs: 8000,
-    skeletonCount: 10
+    skeletonCount: 10,
+    searchDelayMs: 150,
+    favoritesKey: "rhodes.favorites.v1",
+    favoritesApiUrl: "http://localhost:5000/api/favorites",
+    maxNotesLength: 500,
+    maxRoleLength: 60,
+    toastMs: 4000
   });
+
+  const PROMOTIONS = { Base: "Base", Elite1: "Élite 1", Elite2: "Élite 2" };
 
   const CLASSES = ["Vanguard", "Guard", "Defender", "Sniper", "Caster", "Medic", "Supporter", "Specialist"];
 
@@ -395,7 +405,307 @@
   }
 
   // ===================================================================
-  // 4. Renderizado
+  // 4. Búsqueda y filtros combinados
+  // ===================================================================
+
+  /** Texto comparable: minúsculas, sin acentos y con espacios simples. */
+  function normalizeSearch(text) {
+    return String(text ?? "")
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  // El texto indexable de cada operador se calcula una sola vez.
+  const searchIndex = new WeakMap();
+
+  function haystackOf(op) {
+    let text = searchIndex.get(op);
+    if (text === undefined) {
+      text = normalizeSearch([op.name, op.className, op.archetype, ...(op.affiliations || [op.affiliation]),
+        op.description, op.biography].join(" "));
+      searchIndex.set(op, text);
+    }
+    return text;
+  }
+
+  /**
+   * Aplica búsqueda libre y filtros con lógica AND. Cada palabra de la búsqueda debe aparecer en el nombre,
+   * la clase, el arquetipo, las afiliaciones, la descripción o la biografía.
+   */
+  function filterOperators(operators, { search = "", className = "", rarity = "", affiliation = "" } = {}) {
+    const tokens = normalizeSearch(search).split(" ").filter(Boolean);
+    const wantedRarity = rarity === "" || rarity === null || rarity === undefined ? null : Number(rarity);
+    const wantedAffiliation = normalizeSearch(affiliation);
+
+    return operators.filter(op =>
+      (!className || op.className === className)
+      && (wantedRarity === null || op.rarity === wantedRarity)
+      && (!wantedAffiliation || (op.affiliations || [op.affiliation]).some(a => normalizeSearch(a) === wantedAffiliation))
+      && tokens.every(token => haystackOf(op).includes(token)));
+  }
+
+  /** Afiliaciones principales únicas con su número de operadores, en orden alfabético. */
+  function collectAffiliations(operators) {
+    const counts = new Map();
+    for (const op of operators) {
+      if (op.affiliation) counts.set(op.affiliation, (counts.get(op.affiliation) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => compareNames(a.name, b.name));
+  }
+
+  function hasActiveFilters(filters = {}) {
+    return Boolean(normalizeSearch(filters.search) || filters.className || filters.rarity || filters.affiliation);
+  }
+
+  // ===================================================================
+  // 5. Favoritos: CRUD en localStorage y sincronización con el backend
+  // ===================================================================
+
+  /** Error de favoritos. code: duplicate | validation. */
+  class FavoriteError extends Error {
+    constructor(message, code, field = null) {
+      super(message);
+      this.name = "FavoriteError";
+      this.code = code;
+      this.field = field;
+    }
+  }
+
+  function newId() {
+    if (globalThis.crypto && typeof globalThis.crypto.randomUUID === "function") return globalThis.crypto.randomUUID();
+    return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  function scoreInRange(value, field, label) {
+    const number = Number(value);
+    if (!Number.isInteger(number) || number < 1 || number > 5) {
+      throw new FavoriteError(`${label} debe estar entre 1 y 5.`, "validation", field);
+    }
+    return number;
+  }
+
+  /** Valida un cambio parcial con las mismas reglas que FavoriteSquadMember en C#. */
+  function validateFavoritePatch(patch = {}) {
+    const clean = {};
+    if (patch.squadRole !== undefined) {
+      clean.squadRole = cleanText(String(patch.squadRole ?? ""));
+      if (clean.squadRole.length > CONFIG.maxRoleLength) {
+        throw new FavoriteError(`El rol no puede superar ${CONFIG.maxRoleLength} caracteres.`, "validation", "squadRole");
+      }
+    }
+    if (patch.priority !== undefined) clean.priority = scoreInRange(patch.priority, "priority", "La prioridad");
+    if (patch.rating !== undefined) clean.rating = scoreInRange(patch.rating, "rating", "La calificación");
+    if (patch.preferredPromotion !== undefined) {
+      if (!Object.hasOwn(PROMOTIONS, patch.preferredPromotion)) {
+        throw new FavoriteError("La promoción preferida no es válida.", "validation", "preferredPromotion");
+      }
+      clean.preferredPromotion = patch.preferredPromotion;
+    }
+    if (patch.tacticalNotes !== undefined) {
+      clean.tacticalNotes = cleanText(String(patch.tacticalNotes ?? ""));
+      if (clean.tacticalNotes.length > CONFIG.maxNotesLength) {
+        throw new FavoriteError(`La nota táctica no puede superar ${CONFIG.maxNotesLength} caracteres.`, "validation", "tacticalNotes");
+      }
+    }
+    return clean;
+  }
+
+  function isFavoriteRecord(value) {
+    return Boolean(value) && typeof value === "object"
+      && typeof value.id === "string" && typeof value.operatorId === "string" && typeof value.operatorName === "string";
+  }
+
+  /**
+   * CRUD de favoritos con persistencia en localStorage. Es la fuente de verdad en GitHub Pages;
+   * en local, cada cambio se replica además en FavoritesController.
+   */
+  function createFavoritesStore(storage, { now = Date.now, idFactory = newId, key = CONFIG.favoritesKey } = {}) {
+    const listeners = new Set();
+    let records = load();
+
+    function load() {
+      try {
+        const parsed = JSON.parse(storage.getItem(key));
+        return Array.isArray(parsed) ? parsed.filter(isFavoriteRecord) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function persist() {
+      try {
+        storage.setItem(key, JSON.stringify(records));
+      } catch {
+        /* almacenamiento lleno o bloqueado: los cambios viven sólo en esta sesión */
+      }
+    }
+
+    function emit() {
+      const snapshot = list();
+      for (const listener of listeners) listener(snapshot);
+    }
+
+    const find = id => records.find(record => record.id === id);
+
+    function list() {
+      return records.map(record => ({ ...record })).sort((a, b) => a.priority - b.priority || a.createdAt - b.createdAt);
+    }
+
+    function get(id) {
+      const record = find(id);
+      return record ? { ...record } : null;
+    }
+
+    function findByOperator(operatorId) {
+      const record = records.find(item => item.operatorId === operatorId);
+      return record ? { ...record } : null;
+    }
+
+    function has(operatorId) {
+      return records.some(record => record.operatorId === operatorId);
+    }
+
+    // CREATE
+    function add(op, initial = {}) {
+      if (has(op.id)) throw new FavoriteError(`${op.name} ya está en tu escuadrón.`, "duplicate");
+      const timestamp = now();
+      const record = {
+        id: idFactory(),
+        operatorId: op.id,
+        operatorName: op.name,
+        className: op.className || "",
+        rarity: op.rarity || 0,
+        art: op.art || CONFIG.placeholderArt,
+        squadRole: "",
+        priority: 3,
+        rating: 3,
+        preferredPromotion: "Elite2",
+        tacticalNotes: "",
+        remoteId: null,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        ...validateFavoritePatch(initial)
+      };
+      records.push(record);
+      persist();
+      emit();
+      return { ...record };
+    }
+
+    // UPDATE
+    function update(id, patch) {
+      const record = find(id);
+      if (!record) return null;
+      Object.assign(record, validateFavoritePatch(patch), { updatedAt: now() });
+      persist();
+      emit();
+      return { ...record };
+    }
+
+    // DELETE
+    function remove(id) {
+      const before = records.length;
+      records = records.filter(record => record.id !== id);
+      if (records.length === before) return false;
+      persist();
+      emit();
+      return true;
+    }
+
+    /** Guarda el id que asignó el backend sin tocar la fecha de edición. */
+    function attachRemote(id, remoteId) {
+      const record = find(id);
+      if (!record) return;
+      record.remoteId = remoteId;
+      persist();
+    }
+
+    function subscribe(listener) {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    }
+
+    return { list, get, findByOperator, has, add, update, remove, attachRemote, subscribe };
+  }
+
+  /**
+   * Replica el CRUD en FavoritesController (POST, PUT, DELETE). Nunca lanza: si el backend no está,
+   * los favoritos siguen guardados en localStorage.
+   */
+  function createFavoritesSync({ fetchImpl = globalThis.fetch, baseUrl = CONFIG.favoritesApiUrl, timeoutMs = CONFIG.backendTimeoutMs } = {}) {
+    const editable = fav => ({
+      squadRole: fav.squadRole,
+      priority: fav.priority,
+      rating: fav.rating,
+      preferredPromotion: fav.preferredPromotion,
+      tacticalNotes: fav.tacticalNotes
+    });
+
+    async function send(url, method, payload) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        return await fetchImpl(url, {
+          method,
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: payload ? JSON.stringify(payload) : undefined,
+          signal: controller.signal
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    const itemUrl = fav => `${baseUrl}/${encodeURIComponent(fav.remoteId)}`;
+
+    async function create(fav) {
+      try {
+        const response = await send(baseUrl, "POST", { operatorName: fav.operatorName, ...editable(fav) });
+        if (response.status === 409) {
+          // Ya existía en el backend (por ejemplo, tras limpiar el navegador): recuperamos su id.
+          const all = await (await send(baseUrl, "GET")).json();
+          const match = Array.isArray(all)
+            ? all.find(item => normalizeSearch(item.operatorName) === normalizeSearch(fav.operatorName))
+            : null;
+          return match ? match.id : null;
+        }
+        if (!response.ok) return null;
+        const created = await response.json();
+        return created && created.id ? created.id : null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function update(fav) {
+      if (!fav.remoteId) return false;
+      try {
+        return (await send(itemUrl(fav), "PUT", editable(fav))).ok;
+      } catch {
+        return false;
+      }
+    }
+
+    async function remove(fav) {
+      if (!fav.remoteId) return false;
+      try {
+        const response = await send(itemUrl(fav), "DELETE");
+        return response.ok || response.status === 404;
+      } catch {
+        return false;
+      }
+    }
+
+    return { create, update, remove };
+  }
+
+  // ===================================================================
+  // 6. Renderizado
   // ===================================================================
 
   const numberFormat = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 2, useGrouping: "always" });
@@ -443,12 +753,27 @@
     }
 
     for (const button of card.querySelectorAll("[data-action]")) button.dataset.operatorId = op.id;
-    const favoriteButton = $("[data-action='favorite']");
-    const isFavorite = favorites.has(op.id);
-    favoriteButton.setAttribute("aria-pressed", String(isFavorite));
-    favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar de" : "Guardar en"} favoritos a ${op.name}`);
+    paintFavoriteButton($("[data-action='favorite']"), favorites.has(op.id), op.name);
     $("[data-action='compare']").setAttribute("aria-label", `Comparar a ${op.name}`);
     return card;
+  }
+
+  /** Estado visual del botón Guardar: estrella rellena y texto "Guardado" cuando ya es favorito. */
+  function paintFavoriteButton(button, isFavorite, name) {
+    button.setAttribute("aria-pressed", String(isFavorite));
+    button.setAttribute("aria-label", `${isFavorite ? "Quitar de" : "Guardar en"} favoritos a ${name}`);
+    const icon = button.querySelector("i");
+    if (icon) icon.className = isFavorite ? "ph-fill ph-star" : "ph ph-star";
+    const label = button.querySelector("span");
+    if (label) label.textContent = isFavorite ? "Guardado" : "Guardar";
+  }
+
+  /** Actualiza los botones de las tarjetas visibles sin volver a pintar la grilla. */
+  function syncFavoriteButtons(doc, favoriteIds, operatorsById) {
+    for (const button of doc.querySelectorAll("#operator-grid [data-action='favorite']")) {
+      const op = operatorsById.get(button.dataset.operatorId);
+      if (op) paintFavoriteButton(button, favoriteIds.has(op.id), op.name);
+    }
   }
 
   /** Pinta las tarjetas y devuelve cuántas se mostraron. */
@@ -502,11 +827,111 @@
     }
   }
 
-  function setResultsCount(doc, shown, { source, stale } = {}) {
+  function setResultsCount(doc, shown, { source, stale, total } = {}) {
     const origin = SOURCE_LABELS[source] ? ` · datos de ${SOURCE_LABELS[source]}` : "";
     const warning = stale ? " (copia guardada, RhodesAPI no respondió)" : "";
-    doc.getElementById("results-count").textContent =
-      `${formatNumber(shown)} ${shown === 1 ? "operador" : "operadores"}${origin}${warning}`;
+    const filtered = typeof total === "number" && total !== shown;
+    const noun = (filtered ? total : shown) === 1 ? "operador" : "operadores";
+    const amount = filtered ? `${formatNumber(shown)} de ${formatNumber(total)}` : formatNumber(shown);
+    doc.getElementById("results-count").textContent = `${amount} ${noun}${origin}${warning}`;
+  }
+
+  function favoriteMeta(fav) {
+    const parts = [
+      fav.squadRole || "Sin rol asignado",
+      `Prioridad ${fav.priority}`,
+      `Calificación ${fav.rating} de 5`,
+      `Promoción ${PROMOTIONS[fav.preferredPromotion] || fav.preferredPromotion}`
+    ];
+    return parts.join(" · ");
+  }
+
+  /** Pinta la sección de favoritos (Read del CRUD). */
+  function renderFavorites(doc, favorites) {
+    const list = doc.getElementById("favorites-list");
+    const empty = doc.getElementById("favorites-empty");
+    const count = doc.getElementById("favorites-count");
+    if (!list) return;
+
+    list.replaceChildren(...favorites.map(fav => {
+      const item = doc.createElement("li");
+      item.className = "favorite-item";
+      item.dataset.favoriteId = fav.id;
+
+      const img = doc.createElement("img");
+      img.setAttribute("alt", "");
+      img.setAttribute("width", "64");
+      img.setAttribute("height", "64");
+      img.setAttribute("loading", "lazy");
+      withFallbackImage(img, fav.art);
+
+      const info = doc.createElement("div");
+      info.className = "favorite-info";
+      const name = doc.createElement("h3");
+      name.textContent = fav.operatorName;
+      const meta = doc.createElement("p");
+      meta.className = "favorite-meta";
+      meta.textContent = favoriteMeta(fav);
+      const note = doc.createElement("p");
+      note.className = fav.tacticalNotes ? "favorite-note" : "favorite-note is-empty";
+      note.textContent = fav.tacticalNotes || "Sin nota táctica todavía.";
+      info.append(name, meta, note);
+
+      const actions = doc.createElement("div");
+      actions.className = "favorite-actions";
+      actions.append(
+        actionButton(doc, "edit", "btn btn-secondary btn-sm", "ph-pencil-simple", "Editar ficha", `Editar la ficha de ${fav.operatorName}`),
+        actionButton(doc, "remove", "btn btn-ghost btn-danger btn-sm", "ph-trash", "Quitar", `Quitar a ${fav.operatorName} del escuadrón`)
+      );
+
+      item.append(img, info, actions);
+      return item;
+    }));
+
+    count.textContent = String(favorites.length);
+    empty.hidden = favorites.length > 0;
+    list.hidden = favorites.length === 0;
+  }
+
+  function actionButton(doc, action, className, icon, text, label) {
+    const button = doc.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.dataset.action = action;
+    button.setAttribute("aria-label", label);
+    const i = doc.createElement("i");
+    i.className = `ph ${icon}`;
+    i.setAttribute("aria-hidden", "true");
+    const span = doc.createElement("span");
+    span.textContent = text;
+    button.append(i, span);
+    return button;
+  }
+
+  /** Aviso breve y accesible para confirmar acciones. */
+  function createToast(doc) {
+    const element = doc.getElementById("status-toast");
+    let timer = null;
+    return function show(message) {
+      if (!element) return;
+      element.textContent = message;
+      element.classList.add("is-visible");
+      clearTimeout(timer);
+      timer = setTimeout(() => element.classList.remove("is-visible"), CONFIG.toastMs);
+    };
+  }
+
+  function openDialog(dialog) {
+    if (typeof dialog.showModal === "function") {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
+  }
+
+  function closeDialog(dialog) {
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
   }
 
   /** Rellena el total del hero y la vista previa con tres operadores de 6 estrellas. */
@@ -541,7 +966,7 @@
   }
 
   // ===================================================================
-  // 5. Interfaz base
+  // 7. Interfaz base
   // ===================================================================
 
   /** Menú móvil de pantalla completa y resaltado de la sección visible. */
@@ -650,7 +1075,7 @@
   }
 
   // ===================================================================
-  // 6. Arranque
+  // 8. Arranque
   // ===================================================================
 
   /** localStorage cuando está disponible; si el navegador lo bloquea, un almacén en memoria. */
@@ -670,26 +1095,232 @@
     }
   }
 
+  function readFilters(doc) {
+    return {
+      search: doc.getElementById("search-input").value,
+      className: doc.getElementById("filter-class").value,
+      rarity: doc.getElementById("filter-rarity").value,
+      affiliation: doc.getElementById("filter-affiliation").value
+    };
+  }
+
+  function clearFilters(doc) {
+    doc.getElementById("search-input").value = "";
+    for (const id of ["filter-class", "filter-rarity", "filter-affiliation"]) doc.getElementById(id).value = "";
+  }
+
+  function fillAffiliations(doc, operators) {
+    const select = doc.getElementById("filter-affiliation");
+    const current = select.value;
+    const first = select.querySelector("option[value='']");
+    const options = collectAffiliations(operators).map(({ name, count }) => {
+      const option = doc.createElement("option");
+      option.value = name;
+      option.textContent = `${name} (${count})`;
+      return option;
+    });
+    select.replaceChildren(first, ...options);
+    select.value = options.some(option => option.value === current) ? current : "";
+  }
+
+  /** Buscador en tiempo real y filtros combinados sobre el catálogo cargado. */
+  function initCatalog(doc, ctx, { searchDelayMs }) {
+    const { state } = ctx;
+    let timer = null;
+
+    function apply() {
+      state.filters = readFilters(doc);
+      state.visible = filterOperators(state.operators, state.filters);
+      renderOperators(doc, state.visible, { favorites: ctx.favoriteIds() });
+      if (state.visible.length > 0) {
+        setResultsCount(doc, state.visible.length, { source: state.source, stale: state.stale, total: state.operators.length });
+      }
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (searchDelayMs <= 0) apply();
+      else timer = setTimeout(apply, searchDelayMs);
+    }
+
+    function reset() {
+      clearFilters(doc);
+      apply();
+      doc.getElementById("search-input").focus();
+    }
+
+    doc.getElementById("search-input").addEventListener("input", schedule);
+    for (const id of ["filter-class", "filter-rarity", "filter-affiliation"]) {
+      doc.getElementById(id).addEventListener("change", apply);
+    }
+    doc.getElementById("reset-filters").addEventListener("click", reset);
+    doc.getElementById("empty-reset").addEventListener("click", reset);
+
+    return {
+      apply,
+      loaded(operators) {
+        state.byId = new Map(operators.map(op => [op.id, op]));
+        fillAffiliations(doc, operators);
+        apply();
+      }
+    };
+  }
+
+  /** CRUD de favoritos en la interfaz: guardar desde la tarjeta, editar ficha, quitar. */
+  function initFavorites(doc, ctx, { store, sync, toast }) {
+    const modal = doc.getElementById("note-modal");
+    const form = doc.getElementById("note-form");
+    const fields = {
+      squadRole: doc.getElementById("note-role"),
+      priority: doc.getElementById("note-priority"),
+      rating: doc.getElementById("note-rating"),
+      preferredPromotion: doc.getElementById("note-promotion"),
+      tacticalNotes: doc.getElementById("note-text")
+    };
+    const counter = doc.getElementById("note-counter");
+    const errorBox = doc.getElementById("note-error");
+    let editingId = null;
+
+    const refresh = list => {
+      renderFavorites(doc, list);
+      syncFavoriteButtons(doc, ctx.favoriteIds(), ctx.state.byId || new Map());
+    };
+    store.subscribe(refresh);
+    refresh(store.list());
+
+    function toggle(operatorId) {
+      const op = ctx.state.byId && ctx.state.byId.get(operatorId);
+      if (!op) return;
+      const existing = store.findByOperator(op.id);
+      if (existing) {
+        store.remove(existing.id);
+        toast(`${op.name} salió de tu escuadrón.`);
+        if (sync) sync.remove(existing);
+        return;
+      }
+      const created = store.add(op);
+      toast(`${op.name} se agregó a tu escuadrón.`);
+      if (sync) sync.create(created).then(remoteId => remoteId && store.attachRemote(created.id, remoteId));
+    }
+
+    function remove(favoriteId) {
+      const fav = store.get(favoriteId);
+      if (!fav || !store.remove(favoriteId)) return;
+      toast(`${fav.operatorName} salió de tu escuadrón.`);
+      if (sync) sync.remove(fav);
+    }
+
+    function showError(message, field) {
+      errorBox.textContent = message;
+      errorBox.hidden = !message;
+      for (const [name, input] of Object.entries(fields)) {
+        if (name === field) input.setAttribute("aria-invalid", "true");
+        else input.removeAttribute("aria-invalid");
+      }
+    }
+
+    function openEditor(favoriteId) {
+      const fav = store.get(favoriteId);
+      if (!fav) return;
+      editingId = fav.id;
+      fields.squadRole.value = fav.squadRole;
+      fields.priority.value = String(fav.priority);
+      fields.rating.value = String(fav.rating);
+      fields.preferredPromotion.value = fav.preferredPromotion;
+      fields.tacticalNotes.value = fav.tacticalNotes;
+      counter.textContent = String(fav.tacticalNotes.length);
+      doc.getElementById("note-operator").textContent =
+        `Ficha de ${fav.operatorName} · ${fav.className} · ${fav.rarity}★`;
+      showError("", null);
+      openDialog(modal);
+      fields.tacticalNotes.focus();
+    }
+
+    // UPDATE desde el modal, con validación en línea antes de guardar.
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!editingId) return;
+      try {
+        const updated = store.update(editingId, {
+          squadRole: fields.squadRole.value,
+          priority: fields.priority.value,
+          rating: fields.rating.value,
+          preferredPromotion: fields.preferredPromotion.value,
+          tacticalNotes: fields.tacticalNotes.value
+        });
+        closeDialog(modal);
+        if (updated) {
+          toast(`Ficha de ${updated.operatorName} actualizada.`);
+          if (sync) sync.update(updated);
+        }
+        editingId = null;
+      } catch (error) {
+        if (!(error instanceof FavoriteError)) throw error;
+        showError(error.message, error.field);
+      }
+    });
+
+    fields.tacticalNotes.addEventListener("input", () => {
+      counter.textContent = String(fields.tacticalNotes.value.length);
+    });
+
+    for (const button of modal.querySelectorAll("[data-close-modal]")) {
+      button.addEventListener("click", () => { closeDialog(modal); editingId = null; });
+    }
+
+    doc.getElementById("operator-grid").addEventListener("click", event => {
+      const button = event.target.closest("[data-action='favorite']");
+      if (button) toggle(button.dataset.operatorId);
+    });
+
+    doc.getElementById("favorites-list").addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+      const item = button && button.closest(".favorite-item");
+      if (!item) return;
+      if (button.dataset.action === "edit") openEditor(item.dataset.favoriteId);
+      if (button.dataset.action === "remove") remove(item.dataset.favoriteId);
+    });
+
+    /** En local, sube al backend los favoritos que todavía no tienen id remoto. */
+    async function reconcile() {
+      if (!sync) return;
+      for (const fav of store.list().filter(item => !item.remoteId)) {
+        const remoteId = await sync.create(fav);
+        if (remoteId) store.attachRemote(fav.id, remoteId);
+      }
+    }
+
+    return { reconcile };
+  }
+
   function boot(doc, {
     fetchImpl = globalThis.fetch && globalThis.fetch.bind(globalThis),
     storage = safeStorage(),
-    location = globalThis.location
+    location = globalThis.location,
+    searchDelayMs = CONFIG.searchDelayMs
   } = {}) {
     doc.documentElement.classList.add("js");
     initNavigation(doc);
     initReveal(doc);
     initTaglineReveal(doc, splitTagline(doc));
 
-    const state = { operators: [], source: null, stale: false };
-    const controller = { state, ready: Promise.resolve(), reload };
+    const store = createFavoritesStore(storage);
+    const sync = canUseBackend(location) ? createFavoritesSync({ fetchImpl }) : null;
+    const state = { operators: [], visible: [], byId: new Map(), filters: {}, source: null, stale: false };
+    const ctx = {
+      state,
+      favoriteIds: () => new Set(store.list().map(fav => fav.operatorId))
+    };
+    const catalog = initCatalog(doc, ctx, { searchDelayMs });
+    const favorites = initFavorites(doc, ctx, { store, sync, toast: createToast(doc) });
+    const controller = { state, store, ready: Promise.resolve(), reload };
 
     async function reload({ forceRefresh = false } = {}) {
       showState(doc, "loading");
       try {
         const result = await loadOperators({ fetchImpl, storage, location, forceRefresh });
         Object.assign(state, { operators: result.operators, source: result.source, stale: result.stale });
-        renderOperators(doc, result.operators);
-        setResultsCount(doc, result.operators.length, result);
+        catalog.loaded(result.operators);
         updateHero(doc, result.operators);
       } catch (error) {
         showState(doc, "error", describeError(error));
@@ -700,6 +1331,7 @@
     if (retry) retry.addEventListener("click", () => { controller.ready = reload({ forceRefresh: true }); });
 
     controller.ready = reload();
+    favorites.reconcile();
     return controller;
   }
 
@@ -707,16 +1339,24 @@
     CONFIG,
     CLASSES,
     ApiError,
+    FavoriteError,
     parseNumber,
     normalizeStats,
     normalizeOperator,
     normalizeBackendOperator,
     normalizeList,
+    normalizeSearch,
+    filterOperators,
+    collectAffiliations,
+    hasActiveFilters,
+    createFavoritesStore,
+    createFavoritesSync,
     fetchJson,
     loadOperators,
     describeError,
     formatNumber,
     renderOperators,
+    renderFavorites,
     showState,
     setResultsCount,
     updateHero,

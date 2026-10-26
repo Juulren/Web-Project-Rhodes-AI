@@ -36,7 +36,17 @@ builder.Services.AddScoped<IOperatorReadService>(sp => sp.GetRequiredService<Rho
 builder.Services.AddScoped<IOperatorStatsService>(sp => sp.GetRequiredService<RhodesOperatorService>());
 
 // El repositorio es Singleton para conservar los favoritos entre peticiones.
-builder.Services.AddSingleton<IRepository<FavoriteSquadMember, string>, InMemoryFavoriteRepository>();
+// Favorites:Storage elige la implementación ("json" o "memory") sin tocar controladores ni servicios (Liskov).
+if (builder.Configuration["Favorites:Storage"]?.Equals("memory", StringComparison.OrdinalIgnoreCase) == true)
+{
+    builder.Services.AddSingleton<IRepository<FavoriteSquadMember, string>, InMemoryFavoriteRepository>();
+}
+else
+{
+    var favoritesFile = Path.Combine(builder.Environment.ContentRootPath,
+        builder.Configuration["Favorites:FilePath"] ?? "App_Data/favorites.json");
+    builder.Services.AddSingleton<IRepository<FavoriteSquadMember, string>>(_ => new JsonFileFavoriteRepository(favoritesFile));
+}
 builder.Services.AddScoped<IFavoriteCrudService, FavoriteCrudService>();
 
 var app = builder.Build();

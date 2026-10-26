@@ -115,7 +115,9 @@ function manyOperators(n) {
     name: `Operador ${String.fromCharCode(65 + i)}`,
     rarity: (i % 6) + 1,
     class: [["Vanguard", "Guard", "Defender", "Sniper", "Caster", "Medic", "Supporter", "Specialist"][i % 8]],
-    description: `Descripción del operador ${i + 1}.`
+    affiliation: "Rhodes Island",
+    description: `Descripción del operador ${i + 1}.`,
+    biography: "Operador de prueba."
   }));
 }
 

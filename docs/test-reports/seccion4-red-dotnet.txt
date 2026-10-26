@@ -1,0 +1,115 @@
+﻿  Determining projects to restore...
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg [C:\Web-Project-Rhodes-AI\Backend\RhodesAI.sln]
+  All projects are up-to-date for restore.
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
+  RhodesAI.Backend -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\bin\Debug\net8.0\RhodesAI.Backend.dll
+  RhodesAI.Tests -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll
+Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.AddThenGetReturnsTheSameData [6 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.FavoriteRepositoryContract.AddThenGetReturnsTheSameData() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 25
+--- End of stack trace from previous location ---
+dotnet : [xUnit.net 00:00:00.35]     
+RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.AddThenGetReturnsTheSameData [FAIL]
+At line:2 char:13
++ cd Backend; dotnet test RhodesAI.sln *> ..\docs\test-reports\seccion4 ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([xUnit.net 00:0...SameData [FAIL]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[xUnit.net 00:00:00.35]     
+RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.MissingDirectoryIsCreatedOnFirstWrite [FAIL]
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.MissingDirectoryIsCreatedOnFirstWrite [1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.MissingDirectoryIsCreatedOnFirstWrite() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 138
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.36]     
+RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.UpdatePersistsChangesAndReportsUnknownEntities [FAIL]
+[xUnit.net 00:00:00.36]     RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.DataSurvivesANewRepositoryInstance 
+[FAIL]
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.UpdatePersistsChangesAndReportsUnknownEntities [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.FavoriteRepositoryContract.UpdatePersistsChangesAndReportsUnknownEntities() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 63
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.DataSurvivesANewRepositoryInstance [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.DataSurvivesANewRepositoryInstance() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 122
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.36]     
+RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.CorruptFileStartsEmptyAndIsKeptAsBackup [FAIL]
+[xUnit.net 00:00:00.36]     RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.GetAllOrdersByPriority [FAIL]
+[xUnit.net 00:00:00.36]     RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.AddRejectsDuplicateIds [FAIL]
+[xUnit.net 00:00:00.36]     
+RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.CrudServiceBehavesTheSameOverThisRepository [FAIL]
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.CorruptFileStartsEmptyAndIsKeptAsBackup [14 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.GetAllAsync() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 11
+   at RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.CorruptFileStartsEmptyAndIsKeptAsBackup() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 150
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.GetAllOrdersByPriority [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.FavoriteRepositoryContract.GetAllOrdersByPriority() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 40
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.AddRejectsDuplicateIds [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.FavoriteRepositoryContract.AddRejectsDuplicateIds() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 53
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.CrudServiceBehavesTheSameOverThisRepository [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.GetAllAsync() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 11
+   at RhodesAI.Backend.Services.Implementations.FavoriteCrudService.CreateAsync(FavoriteCreateDto dto) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Services\Implementations\FavoriteCrudService.cs:line 18
+   at RhodesAI.Tests.FavoriteRepositoryContract.CrudServiceBehavesTheSameOverThisRepository() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 90
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.36]     RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.DeleteRemovesOnlyExistingEntities 
+[FAIL]
+[xUnit.net 00:00:00.36]     RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.RestoreKeepsIdentityAndAuditDates 
+[FAIL]
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.DeleteRemovesOnlyExistingEntities [< 1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Repositories.Implementations.JsonFileFavoriteRepository.AddAsync(FavoriteSquadMember entity) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Repositories\Implementations\JsonFileFavoriteRepository.cs:line 13
+   at RhodesAI.Tests.FavoriteRepositoryContract.DeleteRemovesOnlyExistingEntities() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 77
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.RestoreKeepsIdentityAndAuditDates [1 ms]
+  Error Message:
+   System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace:
+     at RhodesAI.Backend.Models.Domain.FavoriteSquadMember.Restore(String id, String operatorName, String squadRole, Int32 priority, Int32 rating, PromotionLevel preferredPromotion, String tacticalNotes, DateTime createdAt, DateTime updatedAt) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\Models\Domain\FavoriteSquadMember.cs:line 35
+   at RhodesAI.Tests.JsonFileFavoriteRepositoryContractTests.RestoreKeepsIdentityAndAuditDates() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FavoriteRepositoryContractTests.cs:line 162
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.49]     RhodesAI.Tests.FrontendContractTests.StatusToast_IsPoliteLiveRegion [FAIL]
+  Failed RhodesAI.Tests.FrontendContractTests.StatusToast_IsPoliteLiveRegion [5 ms]
+  Error Message:
+   No existe el elemento obligatorio '#status-toast'.
+  Stack Trace:
+     at RhodesAI.Tests.FrontendContractTests.Required(IParentNode doc, String selector) in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FrontendContractTests.cs:line 38
+   at RhodesAI.Tests.FrontendContractTests.StatusToast_IsPoliteLiveRegion() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\FrontendContractTests.cs:line 218
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Failed!  - Failed:    11, Passed:   119, Skipped:     0, Total:   130, Duration: 397 ms - RhodesAI.Tests.dll (net8.0)

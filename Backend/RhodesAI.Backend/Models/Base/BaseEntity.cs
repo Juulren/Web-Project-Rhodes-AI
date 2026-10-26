@@ -20,6 +20,15 @@ public abstract class BaseEntity
     /// <summary>Marca la entidad como modificada.</summary>
     protected void Touch() => UpdatedAt = DateTime.UtcNow;
 
+    /// <summary>Restaura las fechas de auditoría al reconstruir una entidad desde la persistencia.</summary>
+    protected void RestoreAudit(DateTime createdAt, DateTime updatedAt)
+    {
+        if (updatedAt < createdAt)
+            throw new ArgumentException("La fecha de modificación no puede ser anterior a la de creación.");
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
+
     /// <summary>Reglas de validación; las subclases las extienden con override.</summary>
     public virtual IReadOnlyList<string> Validate() =>
         string.IsNullOrWhiteSpace(Id) ? ["El identificador es obligatorio."] : [];
