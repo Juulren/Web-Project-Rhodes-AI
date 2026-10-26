@@ -1,0 +1,10 @@
+﻿  Determining projects to restore...
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg [C:\Web-Project-Rhodes-AI\Backend\RhodesAI.sln]
+  All projects are up-to-date for restore.
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
+  RhodesAI.Backend -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\bin\Debug\net8.0\RhodesAI.Backend.dll
+  RhodesAI.Tests -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll
+Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   142, Skipped:     0, Total:   142, Duration: 395 ms - RhodesAI.Tests.dll (net8.0)

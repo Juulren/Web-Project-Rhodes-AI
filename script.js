@@ -4,11 +4,12 @@
      1. Configuración y errores
      2. Normalización del JSON irregular de RhodesAPI y del backend C#
      3. Datos: fetch() con tiempo límite, fallback híbrido y caché local
-     4. Búsqueda y filtros combinados
-     5. Favoritos: CRUD en localStorage y sincronización con el backend C#
-     6. Renderizado de tarjetas, favoritos y estados (carga, vacío, error)
-     7. Interfaz base: navegación, revelado al hacer scroll y tagline
-     8. Arranque
+     4. Búsqueda, filtros combinados y ordenamiento
+     5. Retos: estadísticas dinámicas, comparador, historial y tema
+     6. Favoritos: CRUD en localStorage y sincronización con el backend C#
+     7. Renderizado de tarjetas, favoritos, estadísticas, comparador y estados
+     8. Interfaz base: navegación, revelado al hacer scroll y tagline
+     9. Arranque
    El archivo funciona en el navegador (window.RhodesTerminal) y en Node
    (module.exports) para poder probar cada capa por separado.
    ===================================================================== */
@@ -51,7 +52,11 @@
     favoritesApiUrl: "http://localhost:5000/api/favorites",
     maxNotesLength: 500,
     maxRoleLength: 60,
-    toastMs: 4000
+    toastMs: 4000,
+    historyKey: "rhodes.history.v1",
+    historyLimit: 8,
+    themeKey: "rhodes.theme",
+    themeColors: { dark: "#181818", light: "#FAFAF9" }
   });
 
   const PROMOTIONS = { Base: "Base", Elite1: "Élite 1", Elite2: "Élite 2" };
@@ -462,8 +467,148 @@
     return Boolean(normalizeSearch(filters.search) || filters.className || filters.rarity || filters.affiliation);
   }
 
+  // Reto 2: ordenamiento alfabético (A a Z, Z a A) y por rareza, con desempate por nombre.
+  const SORTERS = {
+    "name-asc": (a, b) => compareNames(a.name, b.name),
+    "name-desc": (a, b) => compareNames(b.name, a.name),
+    "rarity-desc": (a, b) => b.rarity - a.rarity || compareNames(a.name, b.name),
+    "rarity-asc": (a, b) => a.rarity - b.rarity || compareNames(a.name, b.name)
+  };
+
+  /** Devuelve una copia ordenada; una clave desconocida usa A a Z. */
+  function sortOperators(operators, key) {
+    return [...operators].sort(SORTERS[key] || SORTERS["name-asc"]);
+  }
+
   // ===================================================================
-  // 5. Favoritos: CRUD en localStorage y sincronización con el backend
+  // 5. Retos: estadísticas dinámicas, comparador, historial y tema
+  // ===================================================================
+
+  const round1 = value => Math.round(value * 10) / 10;
+
+  /**
+   * Reto 3: promedios de HP, ATK, DEF y coste del grupo visible, más la distribución porcentual
+   * por clase (de mayor a menor) y por rareza (siempre las seis, de 6 a 1 estrella).
+   */
+  function computeStats(operators) {
+    const total = operators.length;
+    const average = key => (total ? round1(operators.reduce((sum, op) => sum + op.stats[key], 0) / total) : 0);
+    const percent = count => (total ? round1((count * 100) / total) : 0);
+
+    const byClass = new Map();
+    for (const op of operators) byClass.set(op.className, (byClass.get(op.className) || 0) + 1);
+
+    return {
+      total,
+      avgHp: average("hp"),
+      avgAtk: average("atk"),
+      avgDef: average("def"),
+      avgCost: average("cost"),
+      classDistribution: [...byClass.entries()]
+        .map(([label, count]) => ({ label, count, percent: percent(count) }))
+        .sort((a, b) => b.count - a.count || compareNames(a.label, b.label)),
+      rarityDistribution: [6, 5, 4, 3, 2, 1].map(stars => {
+        const count = operators.filter(op => op.rarity === stars).length;
+        return { label: `${stars}★`, count, percent: percent(count) };
+      })
+    };
+  }
+
+  /** Atributos del comparador. En coste e intervalo de ataque gana el valor menor. */
+  const COMPARE_ATTRIBUTES = [
+    { key: "hp", label: "HP" },
+    { key: "atk", label: "ATK" },
+    { key: "def", label: "DEF" },
+    { key: "res", label: "RES" },
+    { key: "cost", label: "Coste", lowerIsBetter: true },
+    { key: "block", label: "Bloqueo" },
+    { key: "interval", label: "Intervalo de ataque", lowerIsBetter: true }
+  ];
+
+  /**
+   * Reto 4: enfrenta a dos operadores atributo por atributo. Cada barra se escala respecto al
+   * mayor de los dos valores para que la diferencia se lea de un vistazo.
+   */
+  function compareOperators(a, b) {
+    const attributes = COMPARE_ATTRIBUTES.map(({ key, label, lowerIsBetter = false }) => {
+      const valueA = a.stats[key];
+      const valueB = b.stats[key];
+      const max = Math.max(valueA, valueB);
+      const winner = valueA === valueB ? "Empate" : (valueA > valueB) !== lowerIsBetter ? "A" : "B";
+      return {
+        key, label, lowerIsBetter, winner,
+        a: valueA,
+        b: valueB,
+        ratioA: max > 0 ? valueA / max : 0,
+        ratioB: max > 0 ? valueB / max : 0
+      };
+    });
+    const winsA = attributes.filter(item => item.winner === "A").length;
+    const winsB = attributes.filter(item => item.winner === "B").length;
+    return { attributes, winsA, winsB, overall: winsA === winsB ? "Empate" : winsA > winsB ? "A" : "B" };
+  }
+
+  /**
+   * Reto 5: últimas búsquedas en localStorage, la más reciente primero, sin duplicados
+   * (sin importar mayúsculas ni acentos) y con un máximo de 8.
+   */
+  function createSearchHistory(storage, { key = CONFIG.historyKey, limit = CONFIG.historyLimit } = {}) {
+    let items = load();
+
+    function load() {
+      try {
+        const parsed = JSON.parse(storage.getItem(key));
+        return Array.isArray(parsed)
+          ? parsed.filter(item => typeof item === "string" && item.trim().length >= 2).slice(0, limit)
+          : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function persist() {
+      try {
+        storage.setItem(key, JSON.stringify(items));
+      } catch {
+        /* almacenamiento bloqueado: el historial vive sólo en esta sesión */
+      }
+    }
+
+    return {
+      list: () => [...items],
+      add(term) {
+        const clean = cleanText(String(term ?? "")).replace(/\s+/g, " ");
+        if (clean.length < 2) return [...items];
+        const normalized = normalizeSearch(clean);
+        items = [clean, ...items.filter(item => normalizeSearch(item) !== normalized)].slice(0, limit);
+        persist();
+        return [...items];
+      },
+      clear() {
+        items = [];
+        persist();
+      }
+    };
+  }
+
+  /** Reto 1: tema guardado; si no hay, el del sistema operativo; si no se puede saber, el oscuro. */
+  function resolveInitialTheme(storage, matchMedia) {
+    try {
+      const saved = storage && storage.getItem(CONFIG.themeKey);
+      if (saved === "light" || saved === "dark") return saved;
+    } catch {
+      /* almacenamiento bloqueado */
+    }
+    try {
+      if (typeof matchMedia === "function" && matchMedia("(prefers-color-scheme: light)").matches) return "light";
+    } catch {
+      /* matchMedia no disponible */
+    }
+    return "dark";
+  }
+
+  // ===================================================================
+  // 6. Favoritos: CRUD en localStorage y sincronización con el backend
   // ===================================================================
 
   /** Error de favoritos. code: duplicate | validation. */
@@ -705,7 +850,7 @@
   }
 
   // ===================================================================
-  // 6. Renderizado
+  // 7. Renderizado
   // ===================================================================
 
   const numberFormat = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 2, useGrouping: "always" });
@@ -908,6 +1053,172 @@
     return button;
   }
 
+  // ---------- Reto 3: panel de inteligencia ----------
+
+  function renderDistribution(doc, container, entries) {
+    container.replaceChildren(...entries.map(entry => {
+      const row = doc.createElement("div");
+      row.className = "dist-row";
+      row.setAttribute("role", "img");
+      row.setAttribute("aria-label", `${entry.label}: ${entry.count} ${entry.count === 1 ? "operador" : "operadores"}, ${formatNumber(entry.percent)} %`);
+
+      const label = doc.createElement("span");
+      label.className = "dist-label";
+      label.textContent = entry.label;
+      const track = doc.createElement("span");
+      track.className = "dist-track";
+      const fill = doc.createElement("span");
+      fill.className = "dist-fill";
+      fill.style.setProperty("--value", String(entry.percent / 100));
+      track.appendChild(fill);
+      const value = doc.createElement("span");
+      value.className = "dist-value mono";
+      value.textContent = `${formatNumber(entry.percent)} %`;
+
+      row.append(label, track, value);
+      return row;
+    }));
+  }
+
+  /** Vuelca computeStats() en el panel; se llama tras cada búsqueda o filtro. */
+  function renderStats(doc, stats) {
+    const values = { total: stats.total, hp: stats.avgHp, atk: stats.avgAtk, def: stats.avgDef, cost: stats.avgCost };
+    for (const [key, value] of Object.entries(values)) {
+      const target = doc.querySelector(`[data-stat='${key}']`);
+      if (target) target.textContent = formatNumber(value);
+    }
+    const classes = doc.getElementById("class-distribution");
+    const rarities = doc.getElementById("rarity-distribution");
+    if (classes) renderDistribution(doc, classes, stats.classDistribution);
+    if (rarities) renderDistribution(doc, rarities, stats.rarityDistribution);
+  }
+
+  // ---------- Reto 4: comparador cara a cara ----------
+
+  function formatAttribute(key, value) {
+    return key === "interval" ? `${formatNumber(value)} s` : formatNumber(value);
+  }
+
+  function compareSide(doc, op, side) {
+    const box = doc.createElement("div");
+    box.className = `compare-side side-${side}`;
+    const img = doc.createElement("img");
+    img.setAttribute("alt", `Retrato de ${op.name}`);
+    img.setAttribute("width", "64");
+    img.setAttribute("height", "64");
+    withFallbackImage(img, op.art);
+    const name = doc.createElement("strong");
+    name.textContent = op.name;
+    const meta = doc.createElement("span");
+    meta.textContent = `${op.rarity}★ · ${op.className}`;
+    box.append(img, name, meta);
+    return box;
+  }
+
+  function verdictText(result, a, b) {
+    if (result.overall === "A") return `${a.name} gana en ${result.winsA} de ${result.attributes.length} atributos.`;
+    if (result.overall === "B") return `${b.name} gana en ${result.winsB} de ${result.attributes.length} atributos.`;
+    return `Empate: cada uno gana en ${result.winsA} atributos.`;
+  }
+
+  /** Pinta el cara a cara, o una indicación si falta elegir operadores. */
+  function renderComparison(doc, a, b) {
+    const container = doc.getElementById("compare-results");
+    const hint = text => {
+      const p = doc.createElement("p");
+      p.className = "field-hint";
+      p.textContent = text;
+      container.replaceChildren(p);
+    };
+    if (!a || !b) return hint("Elige dos operadores para ver quién gana en cada atributo.");
+    if (a.id === b.id) return hint("Elige dos operadores distintos para compararlos.");
+
+    const result = compareOperators(a, b);
+    const header = doc.createElement("div");
+    header.className = "compare-header";
+    const versus = doc.createElement("span");
+    versus.className = "compare-vs mono";
+    versus.textContent = "VS";
+    header.append(compareSide(doc, a, "a"), versus, compareSide(doc, b, "b"));
+
+    const verdict = doc.createElement("p");
+    verdict.className = "compare-verdict";
+    verdict.textContent = verdictText(result, a, b);
+
+    const rows = result.attributes.map(item => {
+      const row = doc.createElement("div");
+      row.className = `compare-row winner-${item.winner === "A" ? "a" : item.winner === "B" ? "b" : "tie"}`;
+      row.dataset.attribute = item.key;
+
+      const label = doc.createElement("p");
+      label.className = "compare-label";
+      label.textContent = item.lowerIsBetter ? `${item.label} (gana el menor)` : item.label;
+      const winnerName = item.winner === "A" ? a.name : item.winner === "B" ? b.name : null;
+      const sr = doc.createElement("span");
+      sr.className = "sr-only";
+      sr.textContent = winnerName ? `, gana ${winnerName}` : ", empate";
+      label.appendChild(sr);
+
+      const valueA = doc.createElement("span");
+      valueA.className = "compare-value value-a mono";
+      valueA.textContent = formatAttribute(item.key, item.a);
+      const valueB = doc.createElement("span");
+      valueB.className = "compare-value value-b mono";
+      valueB.textContent = formatAttribute(item.key, item.b);
+
+      const bar = (side, ratio) => {
+        const track = doc.createElement("span");
+        track.className = `compare-track track-${side}`;
+        const fill = doc.createElement("span");
+        fill.className = "compare-fill";
+        fill.style.setProperty("--value", String(ratio));
+        track.appendChild(fill);
+        return track;
+      };
+
+      row.append(label, valueA, bar("a", item.ratioA), bar("b", item.ratioB), valueB);
+      return row;
+    });
+
+    container.replaceChildren(header, verdict, ...rows);
+  }
+
+  // ---------- Reto 5: historial de búsquedas ----------
+
+  function renderHistory(doc, items) {
+    const list = doc.getElementById("search-history");
+    const clear = doc.getElementById("clear-history");
+    if (!list) return;
+    list.replaceChildren(...items.map(term => {
+      const li = doc.createElement("li");
+      const chip = doc.createElement("button");
+      chip.type = "button";
+      chip.className = "chip";
+      chip.dataset.term = term;
+      chip.setAttribute("aria-label", `Buscar de nuevo ${term}`);
+      const icon = doc.createElement("i");
+      icon.className = "ph ph-clock-counter-clockwise";
+      icon.setAttribute("aria-hidden", "true");
+      chip.append(icon, doc.createTextNode(term));
+      li.appendChild(chip);
+      return li;
+    }));
+    if (clear) clear.hidden = items.length === 0;
+  }
+
+  // ---------- Reto 1: tema ----------
+
+  function applyTheme(doc, theme) {
+    doc.documentElement.dataset.theme = theme;
+    const toggle = doc.getElementById("theme-toggle");
+    if (toggle) {
+      toggle.setAttribute("aria-pressed", String(theme === "light"));
+      toggle.setAttribute("aria-label", theme === "light" ? "Cambiar a tema oscuro" : "Cambiar a tema claro");
+    }
+    const meta = doc.querySelector("meta[name='theme-color']");
+    if (meta) meta.setAttribute("content", CONFIG.themeColors[theme]);
+  }
+
   /** Aviso breve y accesible para confirmar acciones. */
   function createToast(doc) {
     const element = doc.getElementById("status-toast");
@@ -966,7 +1277,7 @@
   }
 
   // ===================================================================
-  // 7. Interfaz base
+  // 8. Interfaz base
   // ===================================================================
 
   /** Menú móvil de pantalla completa y resaltado de la sección visible. */
@@ -1075,7 +1386,7 @@
   }
 
   // ===================================================================
-  // 8. Arranque
+  // 9. Arranque
   // ===================================================================
 
   /** localStorage cuando está disponible; si el navegador lo bloquea, un almacén en memoria. */
@@ -1100,7 +1411,8 @@
       search: doc.getElementById("search-input").value,
       className: doc.getElementById("filter-class").value,
       rarity: doc.getElementById("filter-rarity").value,
-      affiliation: doc.getElementById("filter-affiliation").value
+      affiliation: doc.getElementById("filter-affiliation").value,
+      sort: doc.getElementById("sort-select").value
     };
   }
 
@@ -1130,8 +1442,9 @@
 
     function apply() {
       state.filters = readFilters(doc);
-      state.visible = filterOperators(state.operators, state.filters);
+      state.visible = sortOperators(filterOperators(state.operators, state.filters), state.filters.sort);
       renderOperators(doc, state.visible, { favorites: ctx.favoriteIds() });
+      renderStats(doc, computeStats(state.visible));
       if (state.visible.length > 0) {
         setResultsCount(doc, state.visible.length, { source: state.source, stale: state.stale, total: state.operators.length });
       }
@@ -1150,7 +1463,7 @@
     }
 
     doc.getElementById("search-input").addEventListener("input", schedule);
-    for (const id of ["filter-class", "filter-rarity", "filter-affiliation"]) {
+    for (const id of ["filter-class", "filter-rarity", "filter-affiliation", "sort-select"]) {
       doc.getElementById(id).addEventListener("change", apply);
     }
     doc.getElementById("reset-filters").addEventListener("click", reset);
@@ -1164,6 +1477,104 @@
         apply();
       }
     };
+  }
+
+  /** Reto 1: aplica el tema inicial y alterna con el botón, guardando la elección. */
+  function initTheme(doc, storage) {
+    const view = doc.defaultView;
+    const matchMedia = view && typeof view.matchMedia === "function" ? view.matchMedia.bind(view) : undefined;
+    applyTheme(doc, resolveInitialTheme(storage, matchMedia));
+
+    const toggle = doc.getElementById("theme-toggle");
+    if (!toggle) return;
+    toggle.addEventListener("click", () => {
+      const next = doc.documentElement.dataset.theme === "light" ? "dark" : "light";
+      applyTheme(doc, next);
+      try {
+        storage.setItem(CONFIG.themeKey, next);
+      } catch {
+        /* sin almacenamiento el tema dura hasta recargar */
+      }
+    });
+  }
+
+  /** Reto 4: modal comparador. Se abre desde la barra o desde el botón Comparar de cada tarjeta. */
+  function initComparator(doc, ctx) {
+    const modal = doc.getElementById("compare-modal");
+    const selectA = doc.getElementById("compare-a");
+    const selectB = doc.getElementById("compare-b");
+    const lookup = id => (ctx.state.byId && ctx.state.byId.get(id)) || null;
+    const render = () => renderComparison(doc, lookup(selectA.value), lookup(selectB.value));
+
+    function open() {
+      render();
+      openDialog(modal);
+    }
+
+    /** Primer clic llena A, el segundo llena B; si ambos están ocupados, el nuevo pasa a ser A. */
+    function pick(operatorId) {
+      if (!selectA.value) selectA.value = operatorId;
+      else if (!selectB.value && selectA.value !== operatorId) selectB.value = operatorId;
+      else selectA.value = operatorId;
+      open();
+    }
+
+    selectA.addEventListener("change", render);
+    selectB.addEventListener("change", render);
+    doc.getElementById("compare-swap").addEventListener("click", () => {
+      [selectA.value, selectB.value] = [selectB.value, selectA.value];
+      render();
+    });
+    for (const button of doc.querySelectorAll("[data-open-compare]")) button.addEventListener("click", open);
+    for (const button of modal.querySelectorAll("[data-close-modal]")) button.addEventListener("click", () => closeDialog(modal));
+    doc.getElementById("operator-grid").addEventListener("click", event => {
+      const button = event.target.closest("[data-action='compare']");
+      if (button) pick(button.dataset.operatorId);
+    });
+
+    return {
+      loaded(operators) {
+        for (const select of [selectA, selectB]) {
+          const current = select.value;
+          const placeholder = select.querySelector("option[value='']");
+          const options = sortOperators(operators, "name-asc").map(op => {
+            const option = doc.createElement("option");
+            option.value = op.id;
+            option.textContent = `${op.name} · ${op.rarity}★ ${op.className}`;
+            return option;
+          });
+          select.replaceChildren(placeholder, ...options);
+          select.value = operators.some(op => op.id === current) ? current : "";
+        }
+        render();
+      }
+    };
+  }
+
+  /** Reto 5: registra búsquedas confirmadas (Enter o al salir del campo) y las ofrece como chips. */
+  function initHistory(doc, storage, catalog, toast) {
+    const history = createSearchHistory(storage);
+    const input = doc.getElementById("search-input");
+    const record = () => renderHistory(doc, history.add(input.value));
+
+    input.addEventListener("change", record);
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter") record();
+    });
+    doc.getElementById("search-history").addEventListener("click", event => {
+      const chip = event.target.closest(".chip");
+      if (!chip) return;
+      input.value = chip.dataset.term;
+      catalog.apply();
+      record();
+    });
+    doc.getElementById("clear-history").addEventListener("click", () => {
+      history.clear();
+      renderHistory(doc, []);
+      toast("Historial de búsquedas borrado.");
+      input.focus();
+    });
+    renderHistory(doc, history.list());
   }
 
   /** CRUD de favoritos en la interfaz: guardar desde la tarjeta, editar ficha, quitar. */
@@ -1300,10 +1711,12 @@
     searchDelayMs = CONFIG.searchDelayMs
   } = {}) {
     doc.documentElement.classList.add("js");
+    initTheme(doc, storage);
     initNavigation(doc);
     initReveal(doc);
     initTaglineReveal(doc, splitTagline(doc));
 
+    const toast = createToast(doc);
     const store = createFavoritesStore(storage);
     const sync = canUseBackend(location) ? createFavoritesSync({ fetchImpl }) : null;
     const state = { operators: [], visible: [], byId: new Map(), filters: {}, source: null, stale: false };
@@ -1312,7 +1725,9 @@
       favoriteIds: () => new Set(store.list().map(fav => fav.operatorId))
     };
     const catalog = initCatalog(doc, ctx, { searchDelayMs });
-    const favorites = initFavorites(doc, ctx, { store, sync, toast: createToast(doc) });
+    const favorites = initFavorites(doc, ctx, { store, sync, toast });
+    const comparator = initComparator(doc, ctx);
+    initHistory(doc, storage, catalog, toast);
     const controller = { state, store, ready: Promise.resolve(), reload };
 
     async function reload({ forceRefresh = false } = {}) {
@@ -1321,6 +1736,7 @@
         const result = await loadOperators({ fetchImpl, storage, location, forceRefresh });
         Object.assign(state, { operators: result.operators, source: result.source, stale: result.stale });
         catalog.loaded(result.operators);
+        comparator.loaded(result.operators);
         updateHero(doc, result.operators);
       } catch (error) {
         showState(doc, "error", describeError(error));
@@ -1349,6 +1765,11 @@
     filterOperators,
     collectAffiliations,
     hasActiveFilters,
+    sortOperators,
+    computeStats,
+    compareOperators,
+    createSearchHistory,
+    resolveInitialTheme,
     createFavoritesStore,
     createFavoritesSync,
     fetchJson,
@@ -1357,6 +1778,8 @@
     formatNumber,
     renderOperators,
     renderFavorites,
+    renderStats,
+    renderComparison,
     showState,
     setResultsCount,
     updateHero,

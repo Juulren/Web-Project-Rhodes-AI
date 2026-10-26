@@ -700,18 +700,20 @@ button, input, select, textarea {
 
 .distribution-grid .panel {
   display: grid;
+  align-content: start;
   gap: var(--space-200);
   padding: var(--space-300);
 }
 
 .distribution {
   display: grid;
+  align-content: start;
   gap: var(--space-100);
 }
 
 .dist-row {
   display: grid;
-  grid-template-columns: 96px 1fr 48px;
+  grid-template-columns: 96px 1fr 64px;
   align-items: center;
   gap: var(--space-100);
   font-size: var(--text-sm);
@@ -738,6 +740,7 @@ button, input, select, textarea {
 
 .dist-value {
   text-align: right;
+  white-space: nowrap;
   color: var(--fg-muted);
 }
 
@@ -1381,6 +1384,148 @@ button, input, select, textarea {
   display: grid;
   gap: var(--space-100);
   margin-top: var(--space-300);
+}
+
+.compare-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.compare-side {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-50);
+  text-align: center;
+}
+
+.compare-side img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-xl);
+  object-fit: cover;
+  object-position: top;
+  background-color: var(--surface-raised);
+}
+
+.compare-side span {
+  color: var(--fg-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+}
+
+.compare-vs {
+  color: var(--accent);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  font-weight: 500;
+}
+
+.compare-verdict {
+  margin: var(--space-75) 0;
+  font-size: var(--text-lg);
+  line-height: var(--leading-lg);
+  font-weight: 600;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Cada fila: etiqueta arriba; valor A, barra A, barra B y valor B abajo. Las barras crecen desde el centro. */
+.compare-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 1fr 64px;
+  grid-template-areas:
+    "label label label label"
+    "value-a track-a track-b value-b";
+  align-items: center;
+  gap: var(--space-50) var(--space-75);
+  padding: var(--space-75) var(--space-100);
+  border-radius: var(--radius-xl);
+  background-color: var(--surface-raised);
+}
+
+.compare-label {
+  grid-area: label;
+  color: var(--fg-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+  font-weight: 500;
+  text-align: center;
+}
+
+.compare-value {
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  color: var(--fg-muted);
+}
+
+.value-a {
+  grid-area: value-a;
+}
+
+.value-b {
+  grid-area: value-b;
+  text-align: right;
+}
+
+.compare-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background-color: var(--surface-strong);
+}
+
+.track-a {
+  grid-area: track-a;
+}
+
+.track-b {
+  grid-area: track-b;
+}
+
+.compare-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--fg-muted);
+  transform: scaleX(var(--value, 0));
+  transition: transform var(--duration-layout) var(--ease), background-color var(--duration-color) var(--ease);
+}
+
+.track-a .compare-fill {
+  transform-origin: right center;
+}
+
+.track-b .compare-fill {
+  transform-origin: left center;
+}
+
+.winner-a .track-a .compare-fill,
+.winner-b .track-b .compare-fill {
+  background-color: var(--accent);
+}
+
+.winner-a .value-a,
+.winner-b .value-b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dist-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* =====================================================================
