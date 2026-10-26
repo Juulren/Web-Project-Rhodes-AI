@@ -21,6 +21,14 @@
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Aplica el tema antes del primer pintado para evitar un destello del tema equivocado.
+    try {
+      let theme = localStorage.getItem("rhodes.theme");
+      if (theme !== "light" && theme !== "dark") theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = theme;
+    } catch { /* almacenamiento bloqueado: se queda el tema oscuro */ }
+  </script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -130,11 +138,11 @@
         <div class="distribution-grid">
           <article class="panel">
             <h3>Distribución por clase</h3>
-            <div id="class-distribution" class="distribution" aria-live="polite"></div>
+            <div id="class-distribution" class="distribution"></div>
           </article>
           <article class="panel">
             <h3>Distribución por rareza</h3>
-            <div id="rarity-distribution" class="distribution" aria-live="polite"></div>
+            <div id="rarity-distribution" class="distribution"></div>
           </article>
         </div>
       </div>

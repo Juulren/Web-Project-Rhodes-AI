@@ -1,0 +1,137 @@
+﻿  Determining projects to restore...
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg [C:\Web-Project-Rhodes-AI\Backend\RhodesAI.sln]
+  All projects are up-to-date for restore.
+C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\RhodesAI.Tests.csproj : warning NU1902: Package 'AngleSharp' 1.1.2 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgww-w46g-26qg
+  RhodesAI.Backend -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Backend\bin\Debug\net8.0\RhodesAI.Backend.dll
+  RhodesAI.Tests -> C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll
+Test run for C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\bin\Debug\net8.0\RhodesAI.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+dotnet : [xUnit.net 00:00:00.65]     
+RhodesAI.Tests.ChallengesServiceTests.Summary_RoundsPercentagesAndFollowsTheFilter [FAIL]
+At line:2 char:13
++ cd Backend; dotnet test RhodesAI.sln *> ..\docs\test-reports\seccion5 ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([xUnit.net 00:0...heFilter [FAIL]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[xUnit.net 00:00:00.66]     RhodesAI.Tests.ChallengesServiceTests.Compare_ScalesBarsAgainstTheLargerValue [FAIL]
+[xUnit.net 00:00:00.66]     RhodesAI.Tests.ChallengesServiceTests.Compare_MarksLowerIsBetterForCostAndAttackTime [FAIL]
+[xUnit.net 00:00:00.66]     RhodesAI.Tests.ChallengesServiceTests.Summary_ListsAllSixRaritiesFromSixToOne [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.ComparisonsController_ReturnsOverallWinner [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Summary_ComputesAveragesAndClassDistribution [FAIL]
+  Failed RhodesAI.Tests.ChallengesServiceTests.Summary_RoundsPercentagesAndFollowsTheFilter [70 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+                                  ↓ (pos 0)
+Expected: double[]               [66.700000000000003, 33.299999999999997]
+Actual:   EmptyPartition<double> []
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Summary_RoundsPercentagesAndFollowsTheFilter() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 91
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Compare_ScalesBarsAgainstTheLargerValue [15 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 1
+Actual:   0
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Compare_ScalesBarsAgainstTheLargerValue() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 132
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Compare_MarksLowerIsBetterForCostAndAttackTime [2 ms]
+  Error Message:
+   Assert.True() Failure
+Expected: True
+Actual:   False
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Compare_MarksLowerIsBetterForCostAndAttackTime() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 117
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Summary_ListsAllSixRaritiesFromSixToOne [3 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+                                  ↓ (pos 0)
+Expected: string[]               ["6★", "5★", "4★", "3★", "2★", ···]
+Actual:   EmptyPartition<string> []
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Summary_ListsAllSixRaritiesFromSixToOne() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 82
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.ComparisonsController_ReturnsOverallWinner [8 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "A"
+Actual:   ""
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.ComparisonsController_ReturnsOverallWinner() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 180
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Summary_ComputesAveragesAndClassDistribution [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+           ↓ (pos 0)
+Expected: [DistributionEntryDto { Label = Sniper, Count = 2, Percent = 40 }, DistributionEntryDto { Label = Defender, Count = 1, Percent = 20 }, DistributionEntryDto { Label = Guard, Count = 1, Percent = 20 }, DistributionEntryDto { Label = Vanguard, Count = 1, Percent = 20 }]
+Actual:   []
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Summary_ComputesAveragesAndClassDistribution() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 68
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Compare_CountsWinsAndDecidesOverallWinner [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Compare_SameOperatorIsATieEverywhere [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Summary_EmptyGroupReturnsZerosAndSixEmptyRarities 
+[FAIL]
+  Failed RhodesAI.Tests.ChallengesServiceTests.Compare_CountsWinsAndDecidesOverallWinner [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 4
+Actual:   0
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Compare_CountsWinsAndDecidesOverallWinner() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 142
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Compare_SameOperatorIsATieEverywhere [5 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "Empate"
+Actual:   ""
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Compare_SameOperatorIsATieEverywhere() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 154
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Summary_EmptyGroupReturnsZerosAndSixEmptyRarities [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 6
+Actual:   0
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Summary_EmptyGroupReturnsZerosAndSixEmptyRarities() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 105
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.67]     
+RhodesAI.Tests.ChallengesServiceTests.OperatorsController_StatsEndpointReturnsDistributions [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Filter_SortsByRarityWithNameAsTieBreaker [FAIL]
+[xUnit.net 00:00:00.67]     RhodesAI.Tests.ChallengesServiceTests.Filter_SortsAlphabeticallyIgnoringQuotesAndAccents 
+[FAIL]
+  Failed RhodesAI.Tests.ChallengesServiceTests.OperatorsController_StatsEndpointReturnsDistributions [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 4
+Actual:   0
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.OperatorsController_StatsEndpointReturnsDistributions() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 169
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Filter_SortsByRarityWithNameAsTieBreaker [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+           ↓ (pos 0)
+Expected: ["Exusiai", "Saria", "Ángel", "Myrtle", "'Justice Knight'"]
+Actual:   ["Saria", "'Justice Knight'", "Exusiai", "Myrtle", "Ángel"]
+           ↑ (pos 0)
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Filter_SortsByRarityWithNameAsTieBreaker() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 54
+--- End of stack trace from previous location ---
+  Failed RhodesAI.Tests.ChallengesServiceTests.Filter_SortsAlphabeticallyIgnoringQuotesAndAccents [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+           ↓ (pos 0)
+Expected: ["Ángel", "Exusiai", "'Justice Knight'", "Myrtle", "Saria"]
+Actual:   ["Saria", "'Justice Knight'", "Exusiai", "Myrtle", "Ángel"]
+           ↑ (pos 0)
+  Stack Trace:
+     at RhodesAI.Tests.ChallengesServiceTests.Filter_SortsAlphabeticallyIgnoringQuotesAndAccents() in C:\Web-Project-Rhodes-AI\Backend\RhodesAI.Tests\ChallengesServiceTests.cs:line 47
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:    12, Passed:   130, Skipped:     0, Total:   142, Duration: 616 ms - RhodesAI.Tests.dll (net8.0)

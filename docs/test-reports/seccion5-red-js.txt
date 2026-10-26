@@ -1,0 +1,659 @@
+﻿
+> web-project-rhodes-ai@1.0.0 test
+> node --test "tests/frontend/*.test.js"
+
+✔ fetchJson convierte un 500 en ApiError de tipo http con su código (69.1538ms)
+✔ fetchJson convierte un 404 en ApiError con status 404 (1.713ms)
+✔ fetchJson aborta cuando se supera el tiempo límite (37.5031ms)
+✔ fetchJson distingue fallos de red y JSON inválido (4.4822ms)
+✔ en localhost se consulta primero el backend C# (6.2851ms)
+✔ si el backend no responde se usa RhodesAPI y se guarda la caché (5.8863ms)
+✔ en GitHub Pages nunca se intenta el backend local (3.2267ms)
+✔ una caché vigente evita descargar de nuevo los 5 MB del catálogo (1.4122ms)
+✔ forceRefresh ignora la caché vigente (3.8753ms)
+✔ si todas las fuentes fallan se usa la caché vencida y se marca como desactualizada (2.237ms)
+✔ sin fuentes ni caché se propaga el último ApiError (1.2646ms)
+✔ si el mapa de retratos falla el catálogo carga igual (2.4165ms)
+✔ describeError explica cada fallo con un mensaje específico (2.3153ms)
+✔ el selector de afiliación se llena con las facciones del catálogo (264.056ms)
+✔ escribir en el buscador filtra la grilla en tiempo real (124.9454ms)
+✔ los filtros de clase y rareza se combinan con la búsqueda (119.7455ms)
+✔ el filtro de afiliación limita los resultados (99.6152ms)
+✔ sin coincidencias aparece el estado vacío y Quitar filtros restablece todo (114.3998ms)
+✔ el botón Quitar filtros de la barra limpia búsqueda y selectores (130.7696ms)
+✔ Guardar agrega el operador a favoritos, lo persiste y actualiza la tarjeta (89.7058ms)
+✔ pulsar de nuevo Guardar quita el favorito (89.1187ms)
+✔ el estado de favorito se conserva al filtrar y volver a pintar la grilla (81.2203ms)
+✔ Editar ficha abre el modal con los datos y guardar actualiza la nota táctica (105.6443ms)
+✔ el modal muestra un error en línea si la nota supera 500 caracteres (73.4527ms)
+✔ el contador de caracteres sigue lo que se escribe (97.4811ms)
+✔ Quitar en la lista elimina el favorito (86.1065ms)
+✔ los favoritos siguen ahí al recargar la página (133.4006ms)
+✖ el botón de tema alterna entre oscuro y claro y guarda la preferencia (273.5399ms)
+✖ el tema guardado se aplica al cargar (111.323ms)
+✖ sin preferencia guardada se respeta prefers-color-scheme (82.224ms)
+✖ el selector Ordenar por reordena la grilla visible (90.1453ms)
+✖ el orden se mantiene al filtrar (114.04ms)
+✖ el panel de inteligencia refleja el grupo visible y se recalcula con cada filtro (77.632ms)
+✖ las distribuciones por clase y rareza muestran filas con porcentaje (113.125ms)
+✖ sin resultados el panel muestra ceros (70.171ms)
+✖ el botón Comparar de la barra abre el modal con los selectores llenos (75.5415ms)
+✖ Comparar en dos tarjetas llena A y B y muestra el cara a cara (75.5645ms)
+✖ cambiar un selector actualiza el resultado e Intercambiar invierte A y B (56.9463ms)
+✖ elegir el mismo operador en A y B muestra un aviso en lugar del cara a cara (101.6016ms)
+✖ una búsqueda confirmada aparece como chip y al pulsarlo se repite (75.9248ms)
+✖ Enter en el buscador también registra la búsqueda (93.1184ms)
+✖ Limpiar historial borra los chips y el almacenamiento (63.0484ms)
+✖ el historial guardado se muestra al recargar (56.8107ms)
+✖ sortOperators ordena de la A a la Z ignorando comillas y acentos (3.8345ms)
+✖ sortOperators ordena de la Z a la A (0.4196ms)
+✖ sortOperators ordena por rareza y desempata por nombre (0.4396ms)
+✖ sortOperators usa A a Z ante una clave desconocida y no muta la lista (0.5069ms)
+✖ computeStats promedia HP, ATK, DEF y coste del grupo visible (0.3626ms)
+✖ computeStats calcula la distribución por clase en porcentaje, de mayor a menor (0.3783ms)
+✖ computeStats incluye las seis rarezas, de 6 a 1 estrella, aunque alguna tenga cero (0.4453ms)
+✖ computeStats redondea porcentajes a un decimal (0.368ms)
+✖ computeStats con lista vacía devuelve ceros y no divide por cero (0.4918ms)
+✖ compareOperators enfrenta los 7 atributos en el orden de la tarea (0.6333ms)
+✖ en HP, ATK, DEF, RES y bloqueo gana el valor mayor (0.713ms)
+✖ en coste e intervalo de ataque gana el valor menor (0.535ms)
+✖ las barras se escalan respecto al mayor valor del atributo (0.389ms)
+✖ compareOperators cuenta victorias y decide el ganador general (0.2777ms)
+✖ comparar un operador consigo mismo es empate en todo (2.9123ms)
+✖ el historial guarda la búsqueda más reciente primero y la persiste (0.6092ms)
+✖ el historial no duplica términos aunque cambien mayúsculas o acentos (0.4756ms)
+✖ el historial ignora términos de menos de 2 caracteres (0.3139ms)
+✖ el historial conserva como máximo 8 búsquedas (0.4051ms)
+✖ clear vacía el historial y una entrada corrupta se ignora (0.2839ms)
+✖ resolveInitialTheme prefiere la elección guardada (0.1964ms)
+✖ sin elección guardada respeta prefers-color-scheme y por defecto usa el tema oscuro (0.1465ms)
+✔ add guarda el operador con valores por defecto y lo persiste en localStorage (3.612ms)
+✔ add rechaza un operador repetido (1.2531ms)
+✔ add acepta valores iniciales validados (2.0344ms)
+✔ list ordena por prioridad y luego por fecha de alta (2.8851ms)
+✔ get, has y findByOperator localizan registros (0.9929ms)
+✔ una entrada corrupta en localStorage deja la lista vacía sin romper la app (1.6601ms)
+✔ update edita la nota táctica, recorta espacios y actualiza updatedAt (1.2513ms)
+✔ update cambia rol, prioridad y promoción preferida (0.7494ms)
+✔ update valida los mismos límites que el dominio C# (1.6093ms)
+✔ update devuelve null si el favorito no existe (0.9003ms)
+✔ remove elimina el favorito y permite volver a agregarlo (2.6639ms)
+✔ subscribe avisa de cada cambio (0.7585ms)
+✔ sync.create hace POST con los campos del DTO y devuelve el id remoto (74.0335ms)
+✔ sync.create recupera el id remoto cuando el backend responde 409 (6.4092ms)
+✔ sync.update hace PUT y sync.remove hace DELETE sobre el id remoto (1.9458ms)
+✔ sin id remoto no se llama al backend y un fallo de red no rompe nada (3.5444ms)
+✔ attachRemote guarda el id remoto sin alterar updatedAt (3.1639ms)
+✔ normalizeSearch quita acentos, mayúsculas y espacios sobrantes (5.2668ms)
+✔ sin criterios se devuelven todos los operadores (1.0316ms)
+✔ la búsqueda encuentra coincidencias parciales del nombre sin importar mayúsculas ni acentos (5.2668ms)
+✔ la búsqueda incluye facción, descripción, biografía y arquetipo (0.738ms)
+✔ varias palabras deben coincidir todas (2.0347ms)
+✔ los filtros de clase, rareza y afiliación se combinan entre sí y con la búsqueda (1.2758ms)
+✔ la afiliación coincide también con afiliaciones secundarias (0.6074ms)
+✔ una combinación sin resultados devuelve una lista vacía (0.6288ms)
+✔ filterOperators no modifica la lista original (0.7465ms)
+✔ collectAffiliations lista cada afiliación principal una vez, con su conteo y en orden alfabético (3.5562ms)
+✔ hasActiveFilters detecta cualquier criterio activo (1.2128ms)
+✔ parseNumber acepta números, texto con espacios, prefijos y ceros a la izquierda (2.8588ms)
+✔ normalizeOperator mapea un operador completo usando el tier más alto (7.0141ms)
+✔ la afiliación puede llegar como texto o como arreglo (4.0324ms)
+✔ block con formato 'block: 2' se usa cuando el tier no lo trae (1.7055ms)
+✔ sin bloque e2max se usa el de Elite 1 y se informa la promoción real (1.0013ms)
+✔ un tier con valores vacíos se ignora y nunca produce NaN (0.9881ms)
+✔ se descarta un operador cuyos tiers sólo traen el objeto de error de RhodesAPI (0.7698ms)
+✔ los retratos usan el mapa local porque ak.gamepress.gg ya no existe (0.7197ms)
+✔ sin entrada en el mapa, el charId del enlace genera la ruta del retrato (0.9006ms)
+✔ sin charId ni entrada en el mapa se usa el placeholder local (0.8678ms)
+✔ la descripción vacía cae en la biografía (0.4446ms)
+✔ se descartan registros con rareza fuera de 1 a 6, clase desconocida o sin nombre (2.4136ms)
+✔ normalizeBackendOperator adapta el OperatorDto del backend C# (1.1021ms)
+✔ normalizeList elimina inválidos y duplicados y ordena por nombre (3.1822ms)
+✔ normalizeList ordena ignorando comillas y acentos (2.4898ms)
+✔ normalizeList rechaza respuestas que no son arreglos (1.9584ms)
+✔ renderOperators pinta al menos 10 tarjetas con imagen, nombre, rareza, clase y descripción (234.4043ms)
+✔ renderOperators reemplaza los skeletons y marca la grilla como lista (98.0984ms)
+✔ una imagen rota se sustituye por el placeholder local (72.9384ms)
+✔ showState('error') muestra el aviso con el mensaje y oculta la grilla (30.7811ms)
+✔ showState('empty') muestra la vista vacía y showState('ready') la oculta (25.0507ms)
+✔ renderOperators con lista vacía activa el estado vacío (42.5392ms)
+✔ boot muestra el error con reintento y luego carga al reintentar (121.1985ms)
+✔ boot rellena la vista previa del hero con tres operadores (85.5123ms)
+✔ el menú móvil alterna aria-expanded y la clase is-open (43.3191ms)
+✔ el tagline se divide en palabras individuales para el revelado (50.415ms)
+ℹ tests 119
+ℹ suites 0
+ℹ pass 81
+ℹ fail 38
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6628.0234
+
+✖ failing tests:
+
+test at tests\frontend\challenges-ui.test.js:53:1
+✖ el botón de tema alterna entre oscuro y claro y guarda la preferencia (273.5399ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'dark' !== 'light'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:63:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'dark',
+    expected: 'light',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:70:1
+✖ el tema guardado se aplica al cargar (111.323ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'dark' !== 'light'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:72:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'dark',
+    expected: 'light',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:76:1
+✖ sin preferencia guardada se respeta prefers-color-scheme (82.224ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'dark' !== 'light'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:78:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'dark',
+    expected: 'light',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:83:1
+✖ el selector Ordenar por reordena la grilla visible (90.1453ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'Exusiai' !== 'Saria'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:87:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Exusiai',
+    expected: 'Saria',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:96:1
+✖ el orden se mantiene al filtrar (114.04ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'Ines',
+  +   'Myrtle',
+  +   'Operador A',
+      'Operador I',
+  -   'Operador A',
+  -   'Myrtle',
+  -   'Ines'
+    ]
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:101:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Ines', 'Myrtle', 'Operador A', 'Operador I' ],
+    expected: [ 'Operador I', 'Operador A', 'Myrtle', 'Ines' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:106:1
+✖ el panel de inteligencia refleja el grupo visible y se recalcula con cada filtro (77.632ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '0' !== '14'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:108:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '0',
+    expected: '14',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:119:1
+✖ las distribuciones por clase y rareza muestran filas con porcentaje (113.125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:124:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:134:1
+✖ sin resultados el panel muestra ceros (70.171ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '0' !== '14'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:136:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '0',
+    expected: '14',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:150:1
+✖ el botón Comparar de la barra abre el modal con los selectores llenos (75.5415ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:155:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:160:1
+✖ Comparar en dos tarjetas llena A y B y muestra el cara a cara (75.5645ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '' !== 'saria'
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:164:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'saria',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:178:1
+✖ cambiar un selector actualiza el resultado e Intercambiar invierte A y B (56.9463ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 7
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:186:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 7,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:193:1
+✖ elegir el mismo operador en A y B muestra un aviso en lugar del cara a cara (101.6016ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /dos operadores distintos/. Input:
+  
+  '\n      Elige dos operadores para ver quién gana en cada atributo.\n    '
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:200:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '\n      Elige dos operadores para ver quién gana en cada atributo.\n    ',
+    expected: /dos operadores distintos/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:205:1
+✖ una búsqueda confirmada aparece como chip y al pulsarlo se repite (75.9248ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:212:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:221:1
+✖ Enter en el buscador también registra la búsqueda (93.1184ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:228:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:231:1
+✖ Limpiar historial borra los chips y el almacenamiento (63.0484ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  null !== []
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:241:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges-ui.test.js:244:1
+✖ el historial guardado se muestra al recargar (56.8107ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'lungmen',
+  -   'exusiai'
+  - ]
+  
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges-ui.test.js:248:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'lungmen', 'exusiai' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\frontend\challenges.test.js:34:1
+✖ sortOperators ordena de la A a la Z ignorando comillas y acentos (3.8345ms)
+  TypeError: app.sortOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:35:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests\frontend\challenges.test.js:38:1
+✖ sortOperators ordena de la Z a la A (0.4196ms)
+  TypeError: app.sortOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:39:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests\frontend\challenges.test.js:42:1
+✖ sortOperators ordena por rareza y desempata por nombre (0.4396ms)
+  TypeError: app.sortOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:43:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:47:1
+✖ sortOperators usa A a Z ante una clave desconocida y no muta la lista (0.5069ms)
+  TypeError: app.sortOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:49:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:57:1
+✖ computeStats promedia HP, ATK, DEF y coste del grupo visible (0.3626ms)
+  TypeError: app.computeStats is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:58:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:67:1
+✖ computeStats calcula la distribución por clase en porcentaje, de mayor a menor (0.3783ms)
+  TypeError: app.computeStats is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:68:37)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:78:1
+✖ computeStats incluye las seis rarezas, de 6 a 1 estrella, aunque alguna tenga cero (0.4453ms)
+  TypeError: app.computeStats is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:79:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:86:1
+✖ computeStats redondea porcentajes a un decimal (0.368ms)
+  TypeError: app.computeStats is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:88:37)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:92:1
+✖ computeStats con lista vacía devuelve ceros y no divide por cero (0.4918ms)
+  TypeError: app.computeStats is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:93:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:106:1
+✖ compareOperators enfrenta los 7 atributos en el orden de la tarea (0.6333ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:107:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:111:1
+✖ en HP, ATK, DEF, RES y bloqueo gana el valor mayor (0.713ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:112:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:122:1
+✖ en coste e intervalo de ataque gana el valor menor (0.535ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:123:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:131:1
+✖ las barras se escalan respecto al mayor valor del atributo (0.389ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:132:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:141:1
+✖ compareOperators cuenta victorias y decide el ganador general (0.2777ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:142:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:149:1
+✖ comparar un operador consigo mismo es empate en todo (2.9123ms)
+  TypeError: app.compareOperators is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:150:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:166:1
+✖ el historial guarda la búsqueda más reciente primero y la persiste (0.6092ms)
+  TypeError: app.createSearchHistory is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:168:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:177:1
+✖ el historial no duplica términos aunque cambien mayúsculas o acentos (0.4756ms)
+  TypeError: app.createSearchHistory is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:178:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:187:1
+✖ el historial ignora términos de menos de 2 caracteres (0.3139ms)
+  TypeError: app.createSearchHistory is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:188:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:194:1
+✖ el historial conserva como máximo 8 búsquedas (0.4051ms)
+  TypeError: app.createSearchHistory is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:195:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:203:1
+✖ clear vacía el historial y una entrada corrupta se ignora (0.2839ms)
+  TypeError: app.createSearchHistory is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:205:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:219:1
+✖ resolveInitialTheme prefiere la elección guardada (0.1964ms)
+  TypeError: app.resolveInitialTheme is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:220:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\frontend\challenges.test.js:224:1
+✖ sin elección guardada respeta prefers-color-scheme y por defecto usa el tema oscuro (0.1465ms)
+  TypeError: app.resolveInitialTheme is not a function
+      at TestContext.<anonymous> (C:\Web-Project-Rhodes-AI\tests\frontend\challenges.test.js:225:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
