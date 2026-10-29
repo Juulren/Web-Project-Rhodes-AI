@@ -11,7 +11,7 @@ Aplicación web que consulta en vivo los 335 operadores de *Arknights* desde Rho
 
 | Integrante | Usuario de GitHub | Rol |
 |---|---|---|
-| Juul ren | [@Juulren](https://github.com/Juulren) | Desarrollo completo: frontend, backend C#, pruebas, documentación y publicación |
+| Julio | [@Juulren](https://github.com/Juulren) | Desarrollo completo: frontend, backend C#, pruebas, documentación y publicación (proyecto individual) |
 
 ---
 
